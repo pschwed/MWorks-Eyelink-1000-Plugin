@@ -1,0 +1,196 @@
+// !$*UTF8*$!
+{
+	089C1669FE841209C02AAC07 /* Project object */ = {
+		activeArchitecturePreference = i386;
+		activeBuildConfigurationName = Development;
+		activeTarget = 8D5B49AC048680CD000E48DA /* Eyelink */;
+		codeSenseManager = 7554038412B783F700B337F4 /* Code sense */;
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					833,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 315220893;
+			PBXWorkspaceStateSaveDate = 315220893;
+		};
+		perUserProjectItems = {
+			75A72B5C12B7D2B200164F8E /* PBXTextBookmark */ = 75A72B5C12B7D2B200164F8E /* PBXTextBookmark */;
+			75ECF9A712C8C38100FDCCFC /* PBXTextBookmark */ = 75ECF9A712C8C38100FDCCFC /* PBXTextBookmark */;
+			75F440A712C9E3B90017F39B /* PBXBookmark */ = 75F440A712C9E3B90017F39B /* PBXBookmark */;
+			75F440B812C9E6080017F39B /* PBXTextBookmark */ = 75F440B812C9E6080017F39B /* PBXTextBookmark */;
+			75F440BA12C9E6080017F39B /* PBXTextBookmark */ = 75F440BA12C9E6080017F39B /* PBXTextBookmark */;
+			75F440BC12C9E6080017F39B /* PBXTextBookmark */ = 75F440BC12C9E6080017F39B /* PBXTextBookmark */;
+			75F440BD12C9E6080017F39B /* PBXTextBookmark */ = 75F440BD12C9E6080017F39B /* PBXTextBookmark */;
+			75F440C212C9E6080017F39B /* PBXTextBookmark */ = 75F440C212C9E6080017F39B /* PBXTextBookmark */;
+		};
+		sourceControlManager = 7554038312B783F700B337F4 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	5CF9AEB90FD5795C00F405F6 /* EyelinkPlugin.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {600, 338}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 332}";
+		};
+	};
+	5CFCAB1E11060985007CE55F /* Everything */ = {
+		activeExec = 0;
+	};
+	5CFE59180F571B15000C7F30 /* Eyelink.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1011, 832}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{253, 804}";
+		};
+	};
+	5CFE59190F571B15000C7F30 /* Eyelink.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1011, 2275}}";
+			sepNavSelRange = "{2996, 0}";
+			sepNavVisRange = "{2124, 956}";
+		};
+	};
+	7554038312B783F700B337F4 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	7554038412B783F700B337F4 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	75A72B5C12B7D2B200164F8E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5CF9AEB90FD5795C00F405F6 /* EyelinkPlugin.cpp */;
+		name = "EyelinkPlugin.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 332;
+		vrLoc = 0;
+	};
+	75ECF9A712C8C38100FDCCFC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5CFE59180F571B15000C7F30 /* Eyelink.h */;
+		name = "Eyelink.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 804;
+		vrLoc = 253;
+	};
+	75F440A512C9E3B30017F39B /* eyelink.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		path = eyelink.h;
+		sourceTree = "<group>";
+	};
+	75F440A712C9E3B90017F39B /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 75F440A512C9E3B30017F39B /* eyelink.h */;
+	};
+	75F440B812C9E6080017F39B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 75F440B912C9E6080017F39B /* eye_data.h */;
+		name = "eye_data.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1763;
+		vrLoc = 0;
+	};
+	75F440B912C9E6080017F39B /* eye_data.h */ = {
+		isa = PBXFileReference;
+		name = eye_data.h;
+		path = /Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/eyelink_core.framework/Headers/eye_data.h;
+		sourceTree = "<absolute>";
+	};
+	75F440BA12C9E6080017F39B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 75F440BB12C9E6080017F39B /* eyelink.h */;
+		name = "eyelink.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1760;
+		vrLoc = 0;
+	};
+	75F440BB12C9E6080017F39B /* eyelink.h */ = {
+		isa = PBXFileReference;
+		name = eyelink.h;
+		path = /Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/eyelink_core.framework/Headers/eyelink.h;
+		sourceTree = "<absolute>";
+	};
+	75F440BC12C9E6080017F39B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5CFE59190F571B15000C7F30 /* Eyelink.cpp */;
+		name = "Eyelink.cpp: 98";
+		rLen = 22;
+		rLoc = 2443;
+		rType = 0;
+		vrLen = 791;
+		vrLoc = 2199;
+	};
+	75F440BD12C9E6080017F39B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5CFE59190F571B15000C7F30 /* Eyelink.cpp */;
+		name = "Eyelink.cpp: 112";
+		rLen = 0;
+		rLoc = 2996;
+		rType = 0;
+		vrLen = 956;
+		vrLoc = 2124;
+	};
+	75F440C212C9E6080017F39B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 75F440C312C9E6080017F39B /* eyelink.h */;
+		name = "eyelink.h: 2044";
+		rLen = 12;
+		rLoc = 67537;
+		rType = 0;
+		vrLen = 873;
+		vrLoc = 67234;
+	};
+	75F440C312C9E6080017F39B /* eyelink.h */ = {
+		isa = PBXFileReference;
+		name = eyelink.h;
+		path = /Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/eyelink_core.framework/Headers/eyelink.h;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {901, 44824}}";
+			sepNavSelRange = "{67537, 12}";
+			sepNavVisRange = "{67234, 873}";
+			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
+		};
+	};
+	8D5B49AC048680CD000E48DA /* Eyelink */ = {
+		activeExec = 0;
+	};
+	E12A26F81201E2FB00CE8C55 /* Install */ = {
+		activeExec = 0;
+	};
+}
