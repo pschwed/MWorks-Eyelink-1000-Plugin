@@ -175,11 +175,25 @@ bool Eyelink::update() {
 						e_z -> setValue(paz + 0.5*(pbz-paz));
 					}
 				}
+				else {
+					if (e_x->getValue().getFloat() != MISSING_DATA)
+						e_x -> setValue((float)MISSING_DATA);
+					if (e_y->getValue().getFloat() != MISSING_DATA)
+						e_y -> setValue((float)MISSING_DATA);
+					if (e_z->getValue().getFloat() != MISSING_DATA)
+						e_z -> setValue((float)MISSING_DATA);
+				}
 				
 				if( evt.gx[RIGHT_EYE] != MISSING_DATA &&
 				    evt.gy[RIGHT_EYE] != MISSING_DATA ){
 					e_rx -> setValue( evt.gx[RIGHT_EYE] );
 					e_ry -> setValue( evt.gy[RIGHT_EYE] );
+				}
+				else {
+					if (e_rx->getValue().getFloat() != MISSING_DATA)
+						e_rx -> setValue((float)MISSING_DATA);
+					if (e_ry->getValue().getFloat() != MISSING_DATA)
+						e_ry -> setValue((float)MISSING_DATA);
 				}
 				
 				if( evt.gx[LEFT_EYE] != MISSING_DATA &&
@@ -187,11 +201,23 @@ bool Eyelink::update() {
 					e_lx -> setValue( evt.gx[LEFT_EYE] );
 					e_ly -> setValue( evt.gy[LEFT_EYE] );
 				}
+				else {
+					if (e_lx->getValue().getFloat() != MISSING_DATA)
+						e_lx -> setValue((float)MISSING_DATA);
+					if (e_ly->getValue().getFloat() != MISSING_DATA)
+						e_ly -> setValue((float)MISSING_DATA);
+				}
 				
 				if( evt.hx[RIGHT_EYE] != -7936.0f &&
 				    evt.hy[RIGHT_EYE] != -7936.0f ){
 					h_rx -> setValue( evt.hx[RIGHT_EYE] );
 					h_ry -> setValue( evt.hy[RIGHT_EYE] );
+				}
+				else {
+					if (h_rx->getValue().getFloat() != MISSING_DATA)
+						h_rx -> setValue((float)MISSING_DATA);
+					if (h_ry->getValue().getFloat() != MISSING_DATA)
+						h_ry -> setValue((float)MISSING_DATA);
 				}
 				
 				if( evt.hx[LEFT_EYE] != -7936.0f &&
@@ -199,11 +225,23 @@ bool Eyelink::update() {
 					h_lx -> setValue( evt.hx[LEFT_EYE] );
 					h_ly -> setValue( evt.hy[LEFT_EYE] );
 				}
+				else {
+					if (h_lx->getValue().getFloat() != MISSING_DATA)
+						h_lx -> setValue((float)MISSING_DATA);
+					if (h_ly->getValue().getFloat() != MISSING_DATA)
+						h_ly -> setValue((float)MISSING_DATA);
+				}
 				
 				if( evt.px[RIGHT_EYE] != MISSING_DATA &&
 				    evt.py[RIGHT_EYE] != MISSING_DATA ){
 					p_rx -> setValue( evt.px[RIGHT_EYE] );
 					p_ry -> setValue( evt.py[RIGHT_EYE] );
+				}
+				else {
+					if (p_rx->getValue().getFloat() != MISSING_DATA)
+						p_rx -> setValue((float)MISSING_DATA);
+					if (p_ry->getValue().getFloat() != MISSING_DATA)
+						p_ry -> setValue((float)MISSING_DATA);
 				}
 				
 				if( evt.px[LEFT_EYE] != MISSING_DATA &&
@@ -211,13 +249,27 @@ bool Eyelink::update() {
 					p_lx -> setValue( evt.px[LEFT_EYE] );
 					p_ly -> setValue( evt.py[LEFT_EYE] );
 				}
+				else {
+					if (p_lx->getValue().getFloat() != MISSING_DATA)
+						p_lx -> setValue((float)MISSING_DATA);
+					if (p_ly->getValue().getFloat() != MISSING_DATA)
+						p_ly -> setValue((float)MISSING_DATA);
+				}
 				
 				if( evt.pa[RIGHT_EYE] != 0 ){
 					p_r -> setValue( evt.pa[RIGHT_EYE] );
 				}
+				else {
+					if (p_r->getValue().getFloat() != 0)
+						p_r -> setValue(0.0f);
+				}
 				
 				if( evt.pa[LEFT_EYE] != 0 ){
 					p_l -> setValue( evt.pa[LEFT_EYE] );
+				}
+				else {
+					if (p_l->getValue().getFloat() != 0)
+						p_l -> setValue(0.0f);
 				}
 			}
 		}
