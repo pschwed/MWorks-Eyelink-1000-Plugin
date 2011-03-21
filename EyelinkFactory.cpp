@@ -70,7 +70,13 @@ boost::shared_ptr<mw::Component> EyelinkFactory::createObject(std::map<std::stri
 	MWorksTime update_period = reg->getNumber(parameters.find(UPDATE_PERIOD)->second);
 	
 	string tracker_ip = reg->getValueForAttribute(IP, parameters);
-			
+	
+	float eye_dist = reg->getNumber(parameters.find(EYE_DIST)->second);
+	
+	float z_dist = reg->getNumber(parameters.find(Z_DIST)->second);
+	
+	
+	
 	boost::shared_ptr<mw::Variable> eye_rx = boost::shared_ptr<mw::Variable>(new mw::ConstantVariable(Datum(M_FLOAT, 0)));	
 	if(!parameters[RX].empty()) {
 		eye_rx = reg->getVariable(parameters.find(RX)->second);	
@@ -223,26 +229,6 @@ boost::shared_ptr<mw::Component> EyelinkFactory::createObject(std::map<std::stri
 					   P_L, 
 					   parameters.find(P_L)->second);
 	}
-	
-	boost::shared_ptr<mw::Variable> eye_dist = boost::shared_ptr<mw::Variable>(new mw::ConstantVariable(Datum(M_FLOAT, 0)));
-	if(!parameters[EYE_DIST].empty()) {
-		eye_dist = reg->getVariable(parameters.find(EYE_DIST)->second);	
-		checkAttribute(eye_dist, 
-					   parameters.find("reference_id")->second, 
-					   EYE_DIST, 
-					   parameters.find(EYE_DIST)->second);
-	}
-
-	boost::shared_ptr<mw::Variable> z_dist = boost::shared_ptr<mw::Variable>(new mw::ConstantVariable(Datum(M_FLOAT, 0)));
-	if(!parameters[Z_DIST].empty()) {
-		z_dist = reg->getVariable(parameters.find(Z_DIST)->second);	
-		checkAttribute(z_dist, 
-					   parameters.find("reference_id")->second, 
-					   Z_DIST, 
-					   parameters.find(Z_DIST)->second);
-	}
-	
-
 	
 	boost::shared_ptr<mw::Variable> eye_time = boost::shared_ptr<mw::Variable>(new mw::ConstantVariable(Datum(M_INTEGER, 0)));	
 	if(!parameters[EYE_TIME].empty()) {

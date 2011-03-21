@@ -1,1 +1,2 @@
-Ideally, you should right some developer-level documentation about your plugin here. Ideally..
+Mar 21 2011
+Changes in predefined variable names and types

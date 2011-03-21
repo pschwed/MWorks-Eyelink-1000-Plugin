@@ -28,16 +28,17 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 315220893;
-			PBXWorkspaceStateSaveDate = 315220893;
+			PBXPerProjectTemplateStateSaveDate = 321808232;
+			PBXWorkspaceStateSaveDate = 321808232;
 		};
 		perUserProjectItems = {
 			75A72B5C12B7D2B200164F8E /* PBXTextBookmark */ = 75A72B5C12B7D2B200164F8E /* PBXTextBookmark */;
+			75E518E4132E6887002C3A32 /* PBXTextBookmark */ = 75E518E4132E6887002C3A32 /* PBXTextBookmark */;
+			75E518E7132E6887002C3A32 /* PBXTextBookmark */ = 75E518E7132E6887002C3A32 /* PBXTextBookmark */;
 			75ECF9A712C8C38100FDCCFC /* PBXTextBookmark */ = 75ECF9A712C8C38100FDCCFC /* PBXTextBookmark */;
 			75F440A712C9E3B90017F39B /* PBXBookmark */ = 75F440A712C9E3B90017F39B /* PBXBookmark */;
 			75F440B812C9E6080017F39B /* PBXTextBookmark */ = 75F440B812C9E6080017F39B /* PBXTextBookmark */;
 			75F440BA12C9E6080017F39B /* PBXTextBookmark */ = 75F440BA12C9E6080017F39B /* PBXTextBookmark */;
-			75F440BC12C9E6080017F39B /* PBXTextBookmark */ = 75F440BC12C9E6080017F39B /* PBXTextBookmark */;
 			75F440BD12C9E6080017F39B /* PBXTextBookmark */ = 75F440BD12C9E6080017F39B /* PBXTextBookmark */;
 			75F440C212C9E6080017F39B /* PBXTextBookmark */ = 75F440C212C9E6080017F39B /* PBXTextBookmark */;
 		};
@@ -64,9 +65,9 @@
 	};
 	5CFE59190F571B15000C7F30 /* Eyelink.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1011, 2275}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1011, 5096}}";
 			sepNavSelRange = "{2996, 0}";
-			sepNavVisRange = "{2124, 956}";
+			sepNavVisRange = "{2309, 774}";
 		};
 	};
 	7554038312B783F700B337F4 /* Source Control */ = {
@@ -92,6 +93,32 @@
 		rType = 0;
 		vrLen = 332;
 		vrLoc = 0;
+	};
+	75E518E4132E6887002C3A32 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5CFE59190F571B15000C7F30 /* Eyelink.cpp */;
+		name = "Eyelink.cpp: 115";
+		rLen = 0;
+		rLoc = 2996;
+		rType = 0;
+		vrLen = 774;
+		vrLoc = 2309;
+	};
+	75E518E7132E6887002C3A32 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 75E518E8132E6887002C3A32 /* eyelink.h */;
+		name = "eyelink.h: 3427";
+		rLen = 0;
+		rLoc = 114049;
+		rType = 0;
+		vrLen = 969;
+		vrLoc = 67197;
+	};
+	75E518E8132E6887002C3A32 /* eyelink.h */ = {
+		isa = PBXFileReference;
+		name = eyelink.h;
+		path = /Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/eyelink_core.framework/Headers/eyelink.h;
+		sourceTree = "<absolute>";
 	};
 	75ECF9A712C8C38100FDCCFC /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -125,6 +152,7 @@
 	};
 	75F440B912C9E6080017F39B /* eye_data.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = eye_data.h;
 		path = /Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/eyelink_core.framework/Headers/eye_data.h;
 		sourceTree = "<absolute>";
@@ -141,19 +169,16 @@
 	};
 	75F440BB12C9E6080017F39B /* eyelink.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = eyelink.h;
 		path = /Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/eyelink_core.framework/Headers/eyelink.h;
 		sourceTree = "<absolute>";
-	};
-	75F440BC12C9E6080017F39B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 5CFE59190F571B15000C7F30 /* Eyelink.cpp */;
-		name = "Eyelink.cpp: 98";
-		rLen = 22;
-		rLoc = 2443;
-		rType = 0;
-		vrLen = 791;
-		vrLoc = 2199;
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {901, 44941}}";
+			sepNavSelRange = "{114049, 0}";
+			sepNavVisRange = "{67197, 969}";
+			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
+		};
 	};
 	75F440BD12C9E6080017F39B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -177,15 +202,10 @@
 	};
 	75F440C312C9E6080017F39B /* eyelink.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = eyelink.h;
 		path = /Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/eyelink_core.framework/Headers/eyelink.h;
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {901, 44824}}";
-			sepNavSelRange = "{67537, 12}";
-			sepNavVisRange = "{67234, 873}";
-			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
-		};
 	};
 	8D5B49AC048680CD000E48DA /* Eyelink */ = {
 		activeExec = 0;

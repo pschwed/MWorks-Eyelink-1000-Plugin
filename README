@@ -5,3 +5,7 @@ This is the first version of my Eyelink 1000 Plugin. It comes with no warranty o
 If a eye tracker packet contains no data for one parameter, the MISSING_DATA value will also be written to the assigned variables. This happens only when the variable does not already contain this value.
 
 MWLibrary entry was edited to contain predefined names for all the required variables. This is the notation we like to use in our lab and it is still possible to change that after inserting the plugin.
+
+2011 Mar 21
+
+minor changes in predefined varible names and types

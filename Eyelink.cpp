@@ -35,8 +35,8 @@ Eyelink::Eyelink(const boost::shared_ptr <Scheduler> &a_scheduler,
 				 const boost::shared_ptr <Variable> ply,
 				 const boost::shared_ptr <Variable> pr,
 				 const boost::shared_ptr <Variable> pl,
-				 const boost::shared_ptr <Variable> edist,
-				 const boost::shared_ptr <Variable> zdist,
+				 const float edist,
+				 const float zdist,
 				 const boost::shared_ptr <Variable> etime,
 				 const MWorksTime update_time,
 				 const string trackerip) {
@@ -141,14 +141,13 @@ bool Eyelink::update() {
 				    evt.gx[LEFT_EYE] != MISSING_DATA &&
 				    evt.gy[LEFT_EYE] != MISSING_DATA ) {
 					
-					iod = e_dist->getValue().getFloat();
-					p4321z = -(z_dist->getValue().getFloat()) / iod;
+					p4321z = -z_dist / e_dist;
 					
-					p43x = evt.gx[LEFT_EYE]/iod;
-					p43y = evt.gy[LEFT_EYE]/iod;     
+					p43x = evt.gx[LEFT_EYE]/e_dist;
+					p43y = evt.gy[LEFT_EYE]/e_dist;     
 					
-					p21x = evt.gx[RIGHT_EYE]/iod - 1;
-					p21y = evt.gy[RIGHT_EYE]/iod;
+					p21x = evt.gx[RIGHT_EYE]/e_dist - 1;
+					p21y = evt.gy[RIGHT_EYE]/e_dist;
 					
 					d4321 = p43x * p21x + p43y * p21y + p4321z * p4321z;
 					d4343 = p43x * p43x + p43y * p43y + p4321z * p4321z;

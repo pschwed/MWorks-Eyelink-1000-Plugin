@@ -41,8 +41,8 @@ protected:
 	boost::shared_ptr <Variable> p_ly;
 	boost::shared_ptr <Variable> p_r;
 	boost::shared_ptr <Variable> p_l;
-	boost::shared_ptr <Variable> e_dist;
-	boost::shared_ptr <Variable> z_dist;
+	float e_dist;
+	float z_dist;
 	boost::shared_ptr <Variable> e_time;
 	
 	MWorksTime update_period;
@@ -55,7 +55,6 @@ protected:
 	int errors;
 	
 	// vars for coordinate transformation
-	float iod;
 	float p4321z;
 	float p43x;
 	float p43y;     
@@ -95,8 +94,8 @@ public:
 			const boost::shared_ptr <Variable> ply,
 			const boost::shared_ptr <Variable> pr,
 			const boost::shared_ptr <Variable> py,
-			const boost::shared_ptr <Variable> edist,
-			const boost::shared_ptr <Variable> zdist,
+			const float edist,
+			const float zdist,
 			const boost::shared_ptr <Variable> etime,
 			const MWorksTime update_time,
 			const string trackerip);
