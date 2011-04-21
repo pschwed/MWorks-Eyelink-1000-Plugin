@@ -260,7 +260,7 @@ bool Eyelink::update() {
 				}
 				else {
 					if (p_r->getValue().getFloat() != 0)
-						p_r -> setValue(0.0f);
+						p_r -> setValue((float)MISSING_DATA);
 				}
 				
 				if( evt.pa[LEFT_EYE] != 0 ){
@@ -268,7 +268,7 @@ bool Eyelink::update() {
 				}
 				else {
 					if (p_l->getValue().getFloat() != 0)
-						p_l -> setValue(0.0f);
+						p_l -> setValue((float)MISSING_DATA);
 				}
 			}
 		}
