@@ -64,14 +64,20 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 325071413;
-			PBXWorkspaceStateSaveDate = 325071413;
+			PBXPerProjectTemplateStateSaveDate = 326048689;
+			PBXWorkspaceStateSaveDate = 326048689;
 		};
 		perUserProjectItems = {
+			170D210F136F1C9100194D4E /* PBXTextBookmark */ = 170D210F136F1C9100194D4E /* PBXTextBookmark */;
+			170D2110136F1C9100194D4E /* PBXTextBookmark */ = 170D2110136F1C9100194D4E /* PBXTextBookmark */;
+			170D2111136F1C9100194D4E /* PBXTextBookmark */ = 170D2111136F1C9100194D4E /* PBXTextBookmark */;
+			170D2112136F1C9100194D4E /* PBXTextBookmark */ = 170D2112136F1C9100194D4E /* PBXTextBookmark */;
+			170D2113136F1C9100194D4E /* PBXTextBookmark */ = 170D2113136F1C9100194D4E /* PBXTextBookmark */;
 			1722381F134C9FFC00EA5192 = 1722381F134C9FFC00EA5192 /* PBXTextBookmark */;
 			17223820134C9FFC00EA5192 = 17223820134C9FFC00EA5192 /* PBXTextBookmark */;
-			17223821134C9FFC00EA5192 = 17223821134C9FFC00EA5192 /* PBXTextBookmark */;
-			17223822134C9FFC00EA5192 = 17223822134C9FFC00EA5192 /* PBXTextBookmark */;
+			176093F51360AAA300BA66AD = 176093F51360AAA300BA66AD /* PBXTextBookmark */;
+			176093F61360AAA300BA66AD = 176093F61360AAA300BA66AD /* PBXTextBookmark */;
+			176093F71360AAA300BA66AD = 176093F71360AAA300BA66AD /* PBXTextBookmark */;
 			176A379D12EF2B6B00704E4D = 176A379D12EF2B6B00704E4D /* PBXTextBookmark */;
 			176A37C812EF324500704E4D = 176A37C812EF324500704E4D /* PBXTextBookmark */;
 			176A37E812EF338800704E4D = 176A37E812EF338800704E4D /* PBXTextBookmark */;
@@ -82,7 +88,6 @@
 			17BD49A012E5AE69009BDC02 = 17BD49A012E5AE69009BDC02 /* PBXTextBookmark */;
 			17BD49A212E5AE69009BDC02 = 17BD49A212E5AE69009BDC02 /* PBXTextBookmark */;
 			17BD49A412E5AE69009BDC02 = 17BD49A412E5AE69009BDC02 /* PBXTextBookmark */;
-			17C4114A13338A1E00C24A94 = 17C4114A13338A1E00C24A94 /* PBXTextBookmark */;
 			17C4114D13338A1E00C24A94 = 17C4114D13338A1E00C24A94 /* PBXTextBookmark */;
 			17C4114E13338A1E00C24A94 = 17C4114E13338A1E00C24A94 /* PBXTextBookmark */;
 			17DDE03A134368C900F9B7B3 = 17DDE03A134368C900F9B7B3 /* PBXTextBookmark */;
@@ -93,6 +98,56 @@
 		sourceControlManager = 178DB90012B6B1DB00CFBE97 /* Source Control */;
 		userBuildSettings = {
 		};
+	};
+	170D210F136F1C9100194D4E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5CFE59190F571B15000C7F30 /* Eyelink.cpp */;
+		name = "Eyelink.cpp: 271";
+		rLen = 0;
+		rLoc = 7728;
+		rType = 0;
+		vrLen = 842;
+		vrLoc = 8416;
+	};
+	170D2110136F1C9100194D4E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5CF9AEB80FD5795C00F405F6 /* EyelinkFactory.h */;
+		name = "EyelinkFactory.h: 20";
+		rLen = 0;
+		rLoc = 390;
+		rType = 0;
+		vrLen = 537;
+		vrLoc = 0;
+	};
+	170D2111136F1C9100194D4E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5CF9AEB70FD5795C00F405F6 /* EyelinkFactory.cpp */;
+		name = "EyelinkFactory.cpp: 75";
+		rLen = 0;
+		rLoc = 1858;
+		rType = 0;
+		vrLen = 846;
+		vrLoc = 1422;
+	};
+	170D2112136F1C9100194D4E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5CFCAB091105FB4C007CE55F /* MWLibrary.xml */;
+		name = "MWLibrary.xml: 29";
+		rLen = 3;
+		rLoc = 1293;
+		rType = 0;
+		vrLen = 1437;
+		vrLoc = 0;
+	};
+	170D2113136F1C9100194D4E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5CFCAB091105FB4C007CE55F /* MWLibrary.xml */;
+		name = "MWLibrary.xml: 27";
+		rLen = 0;
+		rLoc = 1122;
+		rType = 0;
+		vrLen = 1437;
+		vrLoc = 0;
 	};
 	1722381F134C9FFC00EA5192 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -114,25 +169,35 @@
 		vrLen = 1091;
 		vrLoc = 293;
 	};
-	17223821134C9FFC00EA5192 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 5CFE59190F571B15000C7F30 /* Eyelink.cpp */;
-		name = "Eyelink.cpp: 144";
-		rLen = 0;
-		rLoc = 3729;
-		rType = 0;
-		vrLen = 965;
-		vrLoc = 2075;
-	};
-	17223822134C9FFC00EA5192 /* PBXTextBookmark */ = {
+	176093F51360AAA300BA66AD /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 5CFE59180F571B15000C7F30 /* Eyelink.h */;
 		name = "Eyelink.h: 52";
 		rLen = 0;
 		rLoc = 1301;
 		rType = 0;
-		vrLen = 1205;
-		vrLoc = 1743;
+		vrLen = 1247;
+		vrLoc = 1701;
+	};
+	176093F61360AAA300BA66AD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5CFE59190F571B15000C7F30 /* Eyelink.cpp */;
+		name = "Eyelink.cpp: 271";
+		rLen = 0;
+		rLoc = 7728;
+		rType = 0;
+		vrLen = 712;
+		vrLoc = 1067;
+	};
+	176093F71360AAA300BA66AD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5CFE59190F571B15000C7F30 /* Eyelink.cpp */;
+		name = "Eyelink.cpp: 271";
+		rLen = 0;
+		rLoc = 7728;
+		rType = 0;
+		vrLen = 926;
+		vrLoc = 7005;
 	};
 	176A36BF12EF19C900704E4D /* GenericData.h */ = {
 		isa = PBXFileReference;
@@ -325,16 +390,6 @@
 		path = /Library/Frameworks/MWorksCore.framework/Versions/A/Headers/Scheduler.h;
 		sourceTree = "<absolute>";
 	};
-	17C4114A13338A1E00C24A94 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 5CFE59180F571B15000C7F30 /* Eyelink.h */;
-		name = "Eyelink.h: 58";
-		rLen = 0;
-		rLoc = 1393;
-		rType = 0;
-		vrLen = 736;
-		vrLoc = 1302;
-	};
 	17C4114D13338A1E00C24A94 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 5CF9AEBA0FD5795C00F405F6 /* EyelinkPlugin.h */;
@@ -360,7 +415,7 @@
 		fRef = 5CFCAB091105FB4C007CE55F /* MWLibrary.xml */;
 		name = "MWLibrary.xml: 30";
 		rLen = 0;
-		rLoc = 1397;
+		rLoc = 1343;
 		rType = 0;
 		vrLen = 1575;
 		vrLoc = 0;
@@ -411,14 +466,14 @@
 	};
 	5CF9AEB70FD5795C00F405F6 /* EyelinkFactory.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1160, 3614}}";
-			sepNavSelRange = "{1743, 41}";
-			sepNavVisRange = "{293, 1091}";
+			sepNavIntBoundsRect = "{{0, 0}, {1160, 3757}}";
+			sepNavSelRange = "{1858, 0}";
+			sepNavVisRange = "{1422, 846}";
 		};
 	};
 	5CF9AEB80FD5795C00F405F6 /* EyelinkFactory.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1160, 467}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1160, 405}}";
 			sepNavSelRange = "{390, 0}";
 			sepNavVisRange = "{0, 537}";
 		};
@@ -439,9 +494,9 @@
 	};
 	5CFCAB091105FB4C007CE55F /* MWLibrary.xml */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1160, 507}}";
-			sepNavSelRange = "{1397, 0}";
-			sepNavVisRange = "{0, 1575}";
+			sepNavIntBoundsRect = "{{0, 0}, {1160, 481}}";
+			sepNavSelRange = "{1122, 0}";
+			sepNavVisRange = "{0, 1437}";
 		};
 	};
 	5CFCAB0F11060747007CE55F /* INSTRUCTIONS.txt */ = {
@@ -464,9 +519,9 @@
 	};
 	5CFE59190F571B15000C7F30 /* Eyelink.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1160, 4914}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1160, 4680}}";
 			sepNavSelRange = "{7728, 0}";
-			sepNavVisRange = "{1067, 712}";
+			sepNavVisRange = "{8416, 842}";
 			sepNavWindowFrame = "{{61, 516}, {1367, 855}}";
 		};
 	};

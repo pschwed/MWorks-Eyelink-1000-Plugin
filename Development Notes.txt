@@ -1,2 +1,7 @@
+May 02 2011
+Eye-Dist, Z-Dist and IP are now constants
+All outputs now have the same type of MISSING_VALUE
+Changes in predefined variable names
+
 Mar 21 2011
 Changes in predefined variable names and types

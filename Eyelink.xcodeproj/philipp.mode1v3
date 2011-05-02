@@ -274,8 +274,8 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>8</integer>
-									<integer>3</integer>
+									<integer>12</integer>
+									<integer>11</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -299,7 +299,7 @@
 							<real>261</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>518 605 1504 806 0 0 2560 1418 </string>
+						<string>355 466 1504 806 0 0 2560 1418 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -317,7 +317,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>Eyelink.h</string>
+								<string>MWLibrary.xml</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -325,11 +325,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>Eyelink.h</string>
+										<string>MWLibrary.xml</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>17223822134C9FFC00EA5192</string>
+										<string>170D2113136F1C9100194D4E</string>
 										<key>history</key>
 										<array>
 											<string>178DB96B12B6C6FE00CFBE97</string>
@@ -346,12 +346,12 @@
 											<string>176A381012EF383300704E4D</string>
 											<string>17C4114D13338A1E00C24A94</string>
 											<string>17C4114E13338A1E00C24A94</string>
-											<string>17DDE03A134368C900F9B7B3</string>
 											<string>17DDE03B134368C900F9B7B3</string>
-											<string>1722381F134C9FFC00EA5192</string>
-											<string>17223820134C9FFC00EA5192</string>
-											<string>17223821134C9FFC00EA5192</string>
-											<string>17C4114A13338A1E00C24A94</string>
+											<string>176093F51360AAA300BA66AD</string>
+											<string>170D210F136F1C9100194D4E</string>
+											<string>170D2110136F1C9100194D4E</string>
+											<string>170D2111136F1C9100194D4E</string>
+											<string>170D2112136F1C9100194D4E</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -363,14 +363,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1221, 499}}</string>
+								<string>{{0, 0}, {1221, 485}}</string>
 								<key>RubberWindowFrame</key>
-								<string>518 605 1504 806 0 0 2560 1418 </string>
+								<string>355 466 1504 806 0 0 2560 1418 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>499pt</string>
+							<string>485pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -383,14 +383,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 504}, {1221, 261}}</string>
+								<string>{{0, 490}, {1221, 275}}</string>
 								<key>RubberWindowFrame</key>
-								<string>518 605 1504 806 0 0 2560 1418 </string>
+								<string>355 466 1504 806 0 0 2560 1418 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>261pt</string>
+							<string>275pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -409,9 +409,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>17223823134C9FFC00EA5192</string>
+				<string>170D2114136F1C9100194D4E</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>17223824134C9FFC00EA5192</string>
+				<string>170D2115136F1C9100194D4E</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -553,7 +553,7 @@
 		<string>/Users/philipp/MWorks-Eyelink-1000-Plugin/Eyelink.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>518 605 1504 806 0 0 2560 1418 </string>
+	<string>355 466 1504 806 0 0 2560 1418 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -630,7 +630,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>178DB91A12B6C1BA00CFBE97</string>
-				<string>17223825134C9FFC00EA5192</string>
+				<string>170D2116136F1C9100194D4E</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
