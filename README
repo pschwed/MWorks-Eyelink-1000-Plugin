@@ -1,3 +1,4 @@
+
 This is the first version of my Eyelink 1000 Plugin. It comes with no warranty or guarantee of proper function!!
 
 2011 Feb 09
@@ -9,3 +10,7 @@ MWLibrary entry was edited to contain predefined names for all the required vari
 2011 Mar 21
 
 minor changes in predefined varible names and types
+
+2011 Jun 16
+
+made the code more thread safe and fixed some minor bugs

@@ -1,0 +1,38 @@
+<MWElements>
+  <MWElement name="Eyelink 1k, Socket Link">
+    <!-- XPath 2.0 expression defining nodes of this type -->
+    <!-- -->
+    <match_signature>iodevice[@type="eyelink" and @data_type='event']</match_signature>
+    
+    <!-- Which super-types does the object belong to -->
+    <isa>IODevice</isa>
+    
+    <description>
+      Eyelink 1000 Plugin.
+	  eye_dist = Distance between eyes in raw eyetracker data (1500 is ok)
+	  z_dist = Distance from Screen (-1000 is ok)
+	  Adjust these values such as the raw x,y,z coordinates are in the range 0..1
+    </description>
+	
+	<icon>smallIOFolder</icon>
+
+    
+    <!-- Payload -->
+    <!-- This XML gets inserted when you drop this object into the project -->
+    <code>
+      <iodevice tag="Eyelink" priority="" data_type="event" type="eyelink" data_interval="1ms"
+				eye_rx="EYE_raw_right_x" eye_ry="EYE_raw_right_y" eye_lx="EYE_raw_left_x" eye_ly="EYE_raw_left_y"
+				eye_x="EYE_raw_x" eye_y="EYE_raw_y" eye_z="EYE_raw_z"
+				href_rx="EYE_href_right_x" href_ry="EYE_href_right_y" href_lx="EYE_href_left_x" href_ly="EYE_href_left_y"
+				pupil_rx="EYE_pupil_right_x" pupil_ry="EYE_pupil_right_y" pupil_lx="EYE_pupil_left_x" pupil_ly="EYE_pupil_left_y"
+				pupil_size_r="EYE_pupil_size_right" pupil_size_l="EYE_pupil_size_left"
+				eye_time="EYE_sample_time"
+				eye_dist="1500" z_dist="-1000"
+				tracker_ip="10.1.1.2"/>
+      <!-- <action type="my_mw_component" tag="My MW Action" />
+        ... you get the idea ...
+        ...
+        -->
+    </code>
+  </MWElement>
+</MWElements>

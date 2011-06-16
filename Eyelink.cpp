@@ -10,6 +10,9 @@
 #include "Eyelink.h"
 #include "boost/bind.hpp"
 
+Lockable *Eyelink::EyelinkDriverLock = NULL;
+bool Eyelink::Eyelink_Initialized = false;
+
 // External function for scheduling
 void *update_(const shared_ptr<Eyelink> &gp){
 	gp->update();                 
@@ -40,6 +43,14 @@ Eyelink::Eyelink(const boost::shared_ptr <Scheduler> &a_scheduler,
 				 const boost::shared_ptr <Variable> etime,
 				 const MWorksTime update_time,
 				 const string trackerip) {
+	if (Eyelink_Initialized) {
+        merror(M_IODEVICE_MESSAGE_DOMAIN,"Eyelink was previously initialized! Trying again, but this is dangerous!!");
+		Eyelink_Initialized = false;
+    }
+    if (EyelinkDriverLock == NULL) {
+        EyelinkDriverLock = new Lockable();
+    }
+	
 	scheduler = a_scheduler;
 	
 	e_rx = rx;
@@ -68,22 +79,31 @@ Eyelink::Eyelink(const boost::shared_ptr <Scheduler> &a_scheduler,
 	
 	tracker_ip = trackerip;
 	
+	errors = 0;
+	stopped = true;
+	
+}
+
+bool Eyelink::initialize(){
+	
+	EyelinkDriverLock -> lock();	
+	
 	// Initializes the link
 	//mprintf(M_IODEVICE_MESSAGE_DOMAIN, "Trying to find Eyelink System at %s",tracker_ip);
 	if (set_eyelink_address( &tracker_ip[0] ) )
-	    throw SimpleException("Failed to set Tracker to address " + tracker_ip);
+	    merror(M_IODEVICE_MESSAGE_DOMAIN,"Failed to set Tracker to address %s", tracker_ip.c_str());
 	
 	if(open_eyelink_connection(0))
-	    throw SimpleException("Failed to connect to Tracker at " + tracker_ip);
+	    merror(M_IODEVICE_MESSAGE_DOMAIN,"Failed to connect to Tracker at %s", tracker_ip.c_str());
 	else {
 		ELINKNODE node;
 		
 		// tell the tracker who we are
 		eyelink_set_name((char*)("MWorks_over_Socket"));
-
+		
 		// verify the name
 		if( eyelink_get_node(0,&node) != OK_RESULT )
-			throw SimpleException("Error, EyeLink didn't acceppt our name");
+			merror(M_IODEVICE_MESSAGE_DOMAIN,"Error, EyeLink didn't acceppt our name");
 		else eyemsg_printf((char*)("%s connected"), node.name);
 		
 		// Enable link data reception
@@ -91,44 +111,76 @@ Eyelink::Eyelink(const boost::shared_ptr <Scheduler> &a_scheduler,
 	}
 	
 	// Eyelink should now be in "TCP-Link Open" mode
-
+	
 	if(eyelink_is_connected()) {
 		
 		tracker_version = eyelink_get_tracker_version(version_info);
 		mprintf(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink %d System Version %s connected via Socket",tracker_version,version_info);
-	
+		
+		Eyelink_Initialized = true;
 	}
 	else {
-		throw SimpleException("Error, Eyelink Connection could not be established");
+		merror(M_IODEVICE_MESSAGE_DOMAIN,"Error, Eyelink Connection could not be established");
 	}
 	
-	errors = 0;
-	stopped = false;
+	EyelinkDriverLock->unlock();
+
+	
+	return Eyelink_Initialized;
+}
+
+Eyelink::~Eyelink(){
+	
+
+	if (Eyelink_Initialized) {
+		
+		EyelinkDriverLock->lock();
+	
+		if (!stopped) {
+			mwarning(M_IODEVICE_MESSAGE_DOMAIN,"Eyelink is still running !");
+		}
+	
+		if (schedule_node) {
+			schedule_node->cancel();
+			schedule_node.reset();
+		}
+		
+		if(eyelink_is_connected()) {
+			
+			// Places EyeLink tracker in off-line (idle) mode
+			set_offline_mode();
+			// close any open data files
+			
+			eyecmd_printf((char*)("close_data_file"));
+			
+			if (eyelink_close(1)) // disconnect from tracker
+			{
+				merror(M_IODEVICE_MESSAGE_DOMAIN, "Could not close Eyelink connection");
+			}
+		
+			//close_eyelink_system();
+			
+			mprintf(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink-1000 System Disconnected.");
+			 
+		}
+		else {
+			mwarning(M_IODEVICE_MESSAGE_DOMAIN,"Error, Eyelink Shutdown failed");
+		}
+		
+		EyelinkDriverLock->unlock();
+		EyelinkDriverLock = NULL;
+		Eyelink_Initialized = false;
+		
+		mprintf(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink successfully unloaded.");
+	}
+	else {
+		merror(M_IODEVICE_MESSAGE_DOMAIN,"Error, Eyelink Shutdown failed because it was not initialized!");
+	}
 	 
 }
 
-
-Eyelink::~Eyelink(){
-	if(!stopped) Eyelink::stopDeviceIO();
-	if(eyelink_is_connected()) {
-	    // Places EyeLink tracker in off-line (idle) mode
-	    set_offline_mode();
-		// close any open data files
-	    eyecmd_printf((char*)("close_data_file"));
-		
-	    eyelink_close(1);         // disconnect from tracker
-	
-		close_eyelink_system();
-		
-		mprintf(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink-1000 System Disconnected.");
-	}
-	else {
-		mwarning(M_IODEVICE_MESSAGE_DOMAIN,"Error, Eyelink Shutdown failed");
-	}
-}
-
 bool Eyelink::update() {
-	
+	EyelinkDriverLock -> lock();
 	if(eyelink_is_connected())	{
 		while(eyelink_get_next_data(NULL)) {
 			if(eyelink_in_data_block(1,0)) { //only if data contains samples
@@ -275,24 +327,25 @@ bool Eyelink::update() {
 	}
 	else {
 		if(++errors * update_period > (MWorksTime)1000000) { //just a quick hack
-			mwarning(M_IODEVICE_MESSAGE_DOMAIN, "Error! EyeLink Connection Lost!!");
+			merror(M_IODEVICE_MESSAGE_DOMAIN, "Error! EyeLink Connection Lost!!");
 			errors = 0;
 		}
 	}
+	EyelinkDriverLock -> unlock();
 	
 	return true;
 }
 
 
 bool Eyelink::startDeviceIO(){
+	EyelinkDriverLock -> lock();
 	
-	if(eyelink_is_connected()) {
+	if(eyelink_is_connected() && stopped) {
 		//Eyelink to offline mode
 		set_offline_mode();
 		// Eyelink to record mode
 		if( start_recording(0,0,1,0) ) {
-			mwarning(M_IODEVICE_MESSAGE_DOMAIN, "Warning: Eyelink does not start! Closing connection..");
-			Eyelink::stopDeviceIO();
+			merror(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink does not start!");
 		}
 		
 		
@@ -308,20 +361,24 @@ bool Eyelink::startDeviceIO(){
 											  M_DEFAULT_IODEVICE_FAIL_SLOP_US,
 											  M_MISSED_EXECUTION_DROP);
 		
+		stopped = false;
+		mprintf(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink successfully started.");
 	}
 	else {
-		mwarning(M_IODEVICE_MESSAGE_DOMAIN, "Warning! Could not start EyeLink! Connection Lost!! (StartIO)");
-		Eyelink::stopDeviceIO();
+		mwarning(M_IODEVICE_MESSAGE_DOMAIN, "Warning! Could not start EyeLink! (StartIO)");
 	}
 	
-	stopped = false;
+	EyelinkDriverLock -> unlock();
 		
-	return true;
+	return !stopped;
 }
 
 
 bool Eyelink::stopDeviceIO() {
+	EyelinkDriverLock -> lock();
+	
 	if(!stopped) {
+		
 		if (schedule_node) {
 			schedule_node->cancel();
 			schedule_node.reset();
@@ -358,13 +415,14 @@ bool Eyelink::stopDeviceIO() {
 		
 		
 		stopped = true;
+		mprintf(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink successfully stopped.");
 	}
+	else {
+		mwarning(M_IODEVICE_MESSAGE_DOMAIN, "Could not stop EyeLink because it is already stopped.");
+	}
+	
+	EyelinkDriverLock -> unlock();
 	
     return stopped;
 }
 
-
-
-void Eyelink::addChild(std::map<std::string, std::string> parameters,
-							mw::ComponentRegistry *reg,
-							shared_ptr<mw::Component> child){}

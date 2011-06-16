@@ -19,6 +19,9 @@
 using namespace mw;
 
 class Eyelink : public IODevice {
+	
+	static Lockable *EyelinkDriverLock;
+    static bool Eyelink_Initialized;
 
 protected:
 	boost::shared_ptr <Scheduler> scheduler;
@@ -101,13 +104,14 @@ public:
 			const string trackerip);
 	~Eyelink();
 
+	virtual bool initialize();
 	virtual bool update();
 	virtual bool startDeviceIO();
 	virtual bool stopDeviceIO();
 	
 	virtual void addChild(std::map<std::string, std::string> parameters,
 						  mw::ComponentRegistry *reg,
-						  shared_ptr<mw::Component> child);
+						  shared_ptr<mw::Component> child) {};
 	
 	shared_ptr<Eyelink> shared_from_this() { return dynamic_pointer_cast<Eyelink>(IODevice::shared_from_this()); }
 };
