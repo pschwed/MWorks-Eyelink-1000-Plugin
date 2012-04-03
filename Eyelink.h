@@ -26,6 +26,7 @@ class Eyelink : public IODevice {
 protected:
 	boost::shared_ptr <Scheduler> scheduler;
     boost::shared_ptr <ScheduleTask> schedule_node;
+    boost::shared_ptr <Clock> clock;
 	
 	boost::shared_ptr <Variable> e_rx;
 	boost::shared_ptr <Variable> e_ry;
