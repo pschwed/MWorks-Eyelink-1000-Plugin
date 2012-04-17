@@ -225,6 +225,7 @@
 				8D5B49AF048680CD000E48DA /* Resources */,
 				8D5B49B1048680CD000E48DA /* Sources */,
 				8D5B49B3048680CD000E48DA /* Frameworks */,
+				E1A479441535F4C200EC3CD4 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -274,6 +275,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E1A479441535F4C200EC3CD4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Edit the plugin binary to link against /Library/Frameworks/eyelink_core.framework instead of a private copy\ninstall_name_tool -change \\\n  \"@executable_path/../Frameworks/eyelink_core.framework/Versions/A/eyelink_core\" \\\n  \"/Library/Frameworks/eyelink_core.framework/Versions/A/eyelink_core\" \\\n  \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/MacOS/${PRODUCT_NAME}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D5B49B1048680CD000E48DA /* Sources */ = {

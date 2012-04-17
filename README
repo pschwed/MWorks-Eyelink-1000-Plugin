@@ -9,3 +9,22 @@ MWLibrary entry was edited to contain predefined names for all the required vari
 2011 Mar 21
 
 minor changes in predefined varible names and types
+
+
+** Installing the EyeLink Developers Kit **
+
+In order to compile and use this plugin, you must install the required EyeLink frameworks.
+
+First, if you have not already registered for access to the SR Research Support Site, you must do so at
+
+  https://www.sr-support.com/forums/register.php?do=signup
+
+Once you are registered and logged in, visit
+
+  https://www.sr-support.com/forums/showthread.php?t=15
+
+and download the file "EyeLink_Developers_Kit_for_Mac_OSX_x64.dmg".  Double-click the file to open it, and then drag the following to /Library/Frameworks:
+
+  EyeLink/Frameworks/eyelink_core.framework
+  SDL/Frameworks/SDL.framework
+  SDL/Frameworks/SDL_gfx.framework
