@@ -10,7 +10,6 @@
 #ifndef Eyelink_H_
 #define Eyelink_H_
 
-#include <MWorksCore/Plugin.h>
 #include <MWorksCore/IODevice.h>
 
 #include <boost/thread/mutex.hpp>
@@ -26,7 +25,6 @@ class Eyelink : public IODevice {
     static bool Eyelink_Initialized;
 
 protected:
-	boost::shared_ptr <Scheduler> scheduler;
     boost::shared_ptr <ScheduleTask> schedule_node;
     boost::shared_ptr <Clock> clock;
 	
@@ -47,11 +45,11 @@ protected:
 	boost::shared_ptr <Variable> p_ly;
 	boost::shared_ptr <Variable> p_r;
 	boost::shared_ptr <Variable> p_l;
-	float e_dist;
-	float z_dist;
+	const float e_dist;
+	const float z_dist;
 	boost::shared_ptr <Variable> e_time;
 	
-	MWorksTime update_period;
+	const MWorksTime update_period;
 	string tracker_ip;
 		
 	FSAMPLE evt;         // buffer to hold sample and event data
@@ -82,29 +80,10 @@ protected:
 	
 
 public:
-	Eyelink(const boost::shared_ptr <Scheduler> &a_scheduler,
-			const boost::shared_ptr <Variable> rx,
-			const boost::shared_ptr <Variable> ry,
-			const boost::shared_ptr <Variable> lx,
-			const boost::shared_ptr <Variable> ly,
-			const boost::shared_ptr <Variable> gx,
-			const boost::shared_ptr <Variable> gy,
-			const boost::shared_ptr <Variable> gz,
-			const boost::shared_ptr <Variable> hrx,
-			const boost::shared_ptr <Variable> hry,
-			const boost::shared_ptr <Variable> hlx,
-			const boost::shared_ptr <Variable> hly,
-			const boost::shared_ptr <Variable> prx,
-			const boost::shared_ptr <Variable> pry,
-			const boost::shared_ptr <Variable> plx,
-			const boost::shared_ptr <Variable> ply,
-			const boost::shared_ptr <Variable> pr,
-			const boost::shared_ptr <Variable> py,
-			const float edist,
-			const float zdist,
-			const boost::shared_ptr <Variable> etime,
-			const MWorksTime update_time,
-			const string trackerip);
+    static void describeComponent(ComponentInfo &info);
+    
+    explicit Eyelink(const ParameterValueMap &parameters);
+    
 	~Eyelink();
 
 	virtual bool initialize();

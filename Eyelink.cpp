@@ -15,6 +15,32 @@ boost::mutex& Eyelink::EyelinkDriverLock = *(new boost::mutex);
 
 bool Eyelink::Eyelink_Initialized = false;
 
+
+static const std::string TAG("tag");
+static const std::string RX("eye_rx");
+static const std::string RY("eye_ry");
+static const std::string LX("eye_lx");
+static const std::string LY("eye_ly");
+static const std::string EX("eye_x");
+static const std::string EY("eye_y");
+static const std::string EZ("eye_z");
+static const std::string H_RX("href_rx");
+static const std::string H_RY("href_ry");
+static const std::string H_LX("href_lx");
+static const std::string H_LY("href_ly");
+static const std::string P_RX("pupil_rx");
+static const std::string P_RY("pupil_ry");
+static const std::string P_LX("pupil_lx");
+static const std::string P_LY("pupil_ly");
+static const std::string P_R("pupil_size_r");
+static const std::string P_L("pupil_size_l");
+static const std::string EYE_DIST("eye_dist");
+static const std::string Z_DIST("z_dist");
+static const std::string EYE_TIME("eye_time");
+static const std::string UPDATE_PERIOD("data_interval");
+static const std::string IP("tracker_ip");
+
+
 // External function for scheduling
 void *update_(const shared_ptr<Eyelink> &gp){
 	gp->update();                 
@@ -22,62 +48,70 @@ void *update_(const shared_ptr<Eyelink> &gp){
 }
 
 
-Eyelink::Eyelink(const boost::shared_ptr <Scheduler> &a_scheduler,
-				 const boost::shared_ptr <Variable> rx,
-				 const boost::shared_ptr <Variable> ry,
-				 const boost::shared_ptr <Variable> lx,
-				 const boost::shared_ptr <Variable> ly,
-				 const boost::shared_ptr <Variable> gx,
-				 const boost::shared_ptr <Variable> gy,
-				 const boost::shared_ptr <Variable> gz,
-				 const boost::shared_ptr <Variable> hrx,
-				 const boost::shared_ptr <Variable> hry,
-				 const boost::shared_ptr <Variable> hlx,
-				 const boost::shared_ptr <Variable> hly,
-				 const boost::shared_ptr <Variable> prx,
-				 const boost::shared_ptr <Variable> pry,
-				 const boost::shared_ptr <Variable> plx,
-				 const boost::shared_ptr <Variable> ply,
-				 const boost::shared_ptr <Variable> pr,
-				 const boost::shared_ptr <Variable> pl,
-				 const float edist,
-				 const float zdist,
-				 const boost::shared_ptr <Variable> etime,
-				 const MWorksTime update_time,
-				 const string trackerip) {
-	scheduler = a_scheduler;
-    clock = Clock::instance();
-	
-	e_rx = rx;
-	e_ry = ry;
-	e_lx = lx;
-	e_ly = ly;
-	e_x = gx;
-	e_y = gy;
-	e_z = gz;
-	e_time = etime;
-	h_rx = hrx;
-	h_ry = hry;
-	h_lx = hlx;
-	h_ly = hly;
-	p_rx = prx;
-	p_ry = pry;
-	p_lx = plx;
-	p_ly = ply;
-	p_r = pr;
-	p_l = pl;
-	
-	update_period = update_time;
-	
-	e_dist = edist;
-	z_dist = zdist;
-	
-	tracker_ip = trackerip;
-	
-	errors = 0;
-	stopped = true;
-	
+void Eyelink::describeComponent(ComponentInfo &info) {
+    IODevice::describeComponent(info);
+    
+    info.setSignature("iodevice/eyelink");
+    info.setDisplayName("Eyelink 1k, Socket Link");
+    info.setDescription(
+"Eyelink 1000 Plugin.\n"
+"eye_dist = Distance between eyes in raw eyetracker data (1500 is ok)\n"
+"z_dist = Distance from Screen (-1000 is ok)\n"
+"Adjust these values such as the raw x,y,z coordinates are in the range 0..1"
+                        );
+    
+    info.addParameter(RX);
+    info.addParameter(RY);
+    info.addParameter(LX);
+    info.addParameter(LY);
+    info.addParameter(EX);
+    info.addParameter(EY);
+    info.addParameter(EZ);
+    info.addParameter(H_RX);
+    info.addParameter(H_RY);
+    info.addParameter(H_LX);
+    info.addParameter(H_LY);
+    info.addParameter(P_RX);
+    info.addParameter(P_RY);
+    info.addParameter(P_LX);
+    info.addParameter(P_LY);
+    info.addParameter(P_R);
+    info.addParameter(P_L);
+    info.addParameter(EYE_DIST, true, "1500");
+    info.addParameter(Z_DIST, true, "-1000");
+    info.addParameter(EYE_TIME);
+    info.addParameter(UPDATE_PERIOD, "1ms");
+    info.addParameter(IP, true, "10.1.1.2");
 }
+
+
+Eyelink::Eyelink(const ParameterValueMap &parameters) :
+    IODevice(parameters),
+    e_rx(parameters[RX]),
+    e_ry(parameters[RY]),
+    e_lx(parameters[LX]),
+    e_ly(parameters[LY]),
+    e_x(parameters[EX]),
+    e_y(parameters[EY]),
+    e_z(parameters[EZ]),
+    h_rx(parameters[H_RX]),
+    h_ry(parameters[H_RY]),
+    p_rx(parameters[P_RX]),
+    p_ry(parameters[P_RY]),
+    p_lx(parameters[P_LX]),
+    p_ly(parameters[P_LY]),
+    p_r(parameters[P_R]),
+    p_l(parameters[P_L]),
+    e_dist(parameters[EYE_DIST]),
+    z_dist(parameters[Z_DIST]),
+    e_time(parameters[EYE_TIME]),
+    update_period(parameters[UPDATE_PERIOD]),
+    tracker_ip(parameters[IP].str()),
+    clock(Clock::instance()),
+    errors(0),
+    stopped(true)
+{ }
+
 
 bool Eyelink::initialize(){
 	
@@ -347,7 +381,8 @@ bool Eyelink::startDeviceIO(){
 			merror(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink does not start!");
 		}
 		
-		
+
+		shared_ptr<Scheduler> scheduler = Scheduler::instance();
 		shared_ptr<Eyelink> this_one = shared_from_this();
 		schedule_node = scheduler->scheduleUS(std::string(FILELINE ": ") + tag,
 											  (MWorksTime)0, 

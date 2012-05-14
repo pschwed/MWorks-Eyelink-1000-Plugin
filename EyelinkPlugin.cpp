@@ -8,15 +8,16 @@
  */
 
 #include <MWorksCore/Plugin.h>
+#include <MWorksCore/StandardComponentFactory.h>
 
-#include "EyelinkFactory.h"
+#include "Eyelink.h"
 
 using namespace mw;
 
 
 class EyelinkPlugin : public Plugin {
 	virtual void registerComponents(shared_ptr<ComponentRegistry> registry) {
-        registry->registerFactory("iodevice/eyelink", new EyelinkFactory());
+        registry->registerFactory<StandardComponentFactory, Eyelink>();
     }
 };
 
