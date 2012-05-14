@@ -83,7 +83,6 @@
 		5CF9AEB70FD5795C00F405F6 /* EyelinkFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EyelinkFactory.cpp; sourceTree = SOURCE_ROOT; };
 		5CF9AEB80FD5795C00F405F6 /* EyelinkFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EyelinkFactory.h; sourceTree = SOURCE_ROOT; };
 		5CF9AEB90FD5795C00F405F6 /* EyelinkPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EyelinkPlugin.cpp; sourceTree = SOURCE_ROOT; };
-		5CF9AEBA0FD5795C00F405F6 /* EyelinkPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EyelinkPlugin.h; sourceTree = SOURCE_ROOT; };
 		5CFCAB091105FB4C007CE55F /* MWLibrary.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MWLibrary.xml; sourceTree = "<group>"; };
 		5CFCAB0C1105FCF2007CE55F /* Development Notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Development Notes.txt"; sourceTree = "<group>"; };
 		5CFCAB0F11060747007CE55F /* INSTRUCTIONS.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = INSTRUCTIONS.txt; sourceTree = "<group>"; wrapsLines = 1; };
@@ -148,7 +147,6 @@
 			children = (
 				5CF9AEB80FD5795C00F405F6 /* EyelinkFactory.h */,
 				5CF9AEB70FD5795C00F405F6 /* EyelinkFactory.cpp */,
-				5CF9AEBA0FD5795C00F405F6 /* EyelinkPlugin.h */,
 				5CF9AEB90FD5795C00F405F6 /* EyelinkPlugin.cpp */,
 				5CFE59180F571B15000C7F30 /* Eyelink.h */,
 				5CFE59190F571B15000C7F30 /* Eyelink.cpp */,

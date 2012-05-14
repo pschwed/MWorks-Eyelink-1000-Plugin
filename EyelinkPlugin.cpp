@@ -7,19 +7,20 @@
  *
  */
 
-#include "EyelinkPlugin.h"
+#include <MWorksCore/Plugin.h>
+
 #include "EyelinkFactory.h"
-#include "MWorksCore/ComponentFactory.h"
+
 using namespace mw;
 
-Plugin *getPlugin(){
+
+class EyelinkPlugin : public Plugin {
+	virtual void registerComponents(shared_ptr<ComponentRegistry> registry) {
+        registry->registerFactory("iodevice/eyelink", new EyelinkFactory());
+    }
+};
+
+
+extern "C" Plugin* getPlugin() {
     return new EyelinkPlugin();
 }
-
-
-void EyelinkPlugin::registerComponents(shared_ptr<mw::ComponentRegistry> registry) {
-
-    registry->registerFactory(std::string("iodevice/eyelink"),
-							  (ComponentFactory *)(new EyelinkFactory()));
-}
-
