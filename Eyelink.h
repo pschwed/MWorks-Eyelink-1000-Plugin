@@ -13,6 +13,8 @@
 #include <MWorksCore/Plugin.h>
 #include <MWorksCore/IODevice.h>
 
+#include <boost/thread/mutex.hpp>
+
 #include <eyelink_core/eyelink.h>
 #include <eyelink_core/core_expt.h>
 
@@ -20,7 +22,7 @@ using namespace mw;
 
 class Eyelink : public IODevice {
 	
-	static Lockable *EyelinkDriverLock;
+	static boost::mutex& EyelinkDriverLock;
     static bool Eyelink_Initialized;
 
 protected:

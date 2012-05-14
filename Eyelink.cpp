@@ -8,9 +8,11 @@
  */
 
 #include "Eyelink.h"
-#include "boost/bind.hpp"
+#include <boost/bind.hpp>
 
-Lockable *Eyelink::EyelinkDriverLock = NULL;
+// Allocate the lock on the heap so it's never destructed
+boost::mutex& Eyelink::EyelinkDriverLock = *(new boost::mutex);
+
 bool Eyelink::Eyelink_Initialized = false;
 
 // External function for scheduling
@@ -43,15 +45,8 @@ Eyelink::Eyelink(const boost::shared_ptr <Scheduler> &a_scheduler,
 				 const boost::shared_ptr <Variable> etime,
 				 const MWorksTime update_time,
 				 const string trackerip) {
-	if (Eyelink_Initialized) {
-        merror(M_IODEVICE_MESSAGE_DOMAIN,"Eyelink was previously initialized! Trying again, but this is dangerous!!");
-		Eyelink_Initialized = false;
-    }
-    if (EyelinkDriverLock == NULL) {
-        EyelinkDriverLock = new Lockable();
-    }
-	
 	scheduler = a_scheduler;
+    clock = Clock::instance();
 	
 	e_rx = rx;
 	e_ry = ry;
@@ -86,9 +81,11 @@ Eyelink::Eyelink(const boost::shared_ptr <Scheduler> &a_scheduler,
 
 bool Eyelink::initialize(){
 	
-	EyelinkDriverLock -> lock();
+    boost::mutex::scoped_lock lock(EyelinkDriverLock);
 	
-    clock = Clock::instance();
+	if (Eyelink_Initialized) {
+        merror(M_IODEVICE_MESSAGE_DOMAIN,"Eyelink was previously initialized! Trying again, but this is dangerous!!");
+    }
 	
     Eyelink_Initialized = false;
     
@@ -126,19 +123,16 @@ bool Eyelink::initialize(){
 	else {
 		merror(M_IODEVICE_MESSAGE_DOMAIN,"Error, Eyelink Connection could not be established");
 	}
-	
-	EyelinkDriverLock->unlock();
 
 	
 	return Eyelink_Initialized;
 }
 
 Eyelink::~Eyelink(){
-	
+    
+    boost::mutex::scoped_lock lock(EyelinkDriverLock);
 
 	if (Eyelink_Initialized) {
-		
-		EyelinkDriverLock->lock();
 	
 		if (!stopped) {
 			mwarning(M_IODEVICE_MESSAGE_DOMAIN,"Eyelink is still running !");
@@ -171,8 +165,6 @@ Eyelink::~Eyelink(){
 			mwarning(M_IODEVICE_MESSAGE_DOMAIN,"Error, Eyelink Shutdown failed");
 		}
 		
-		EyelinkDriverLock->unlock();
-		EyelinkDriverLock = NULL;
 		Eyelink_Initialized = false;
 		
 		mprintf(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink successfully unloaded.");
@@ -186,7 +178,7 @@ Eyelink::~Eyelink(){
 bool Eyelink::update() {
     MWTime inputtime;
     
-	EyelinkDriverLock -> lock();
+    boost::mutex::scoped_lock lock(EyelinkDriverLock);
 	if(eyelink_is_connected())	{
 		while(eyelink_get_next_data(NULL)) {
 			if(eyelink_in_data_block(1,0)) { //only if data contains samples
@@ -339,14 +331,13 @@ bool Eyelink::update() {
 			errors = 0;
 		}
 	}
-	EyelinkDriverLock -> unlock();
 	
 	return true;
 }
 
 
 bool Eyelink::startDeviceIO(){
-	EyelinkDriverLock -> lock();
+    boost::mutex::scoped_lock lock(EyelinkDriverLock);
 	
 	if(eyelink_is_connected() && stopped) {
 		//Eyelink to offline mode
@@ -375,15 +366,13 @@ bool Eyelink::startDeviceIO(){
 	else {
 		mwarning(M_IODEVICE_MESSAGE_DOMAIN, "Warning! Could not start EyeLink! (StartIO)");
 	}
-	
-	EyelinkDriverLock -> unlock();
 		
 	return !stopped;
 }
 
 
 bool Eyelink::stopDeviceIO() {
-	EyelinkDriverLock -> lock();
+    boost::mutex::scoped_lock lock(EyelinkDriverLock);
 	
 	if(!stopped) {
 		
@@ -425,8 +414,6 @@ bool Eyelink::stopDeviceIO() {
 		stopped = true;
 		mprintf(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink successfully stopped.");
 	}
-	
-	EyelinkDriverLock -> unlock();
 	
     return stopped;
 }
