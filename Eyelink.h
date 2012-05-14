@@ -91,11 +91,6 @@ public:
 	virtual bool startDeviceIO();
 	virtual bool stopDeviceIO();
 	
-	virtual void addChild(std::map<std::string, std::string> parameters,
-						  mw::ComponentRegistry *reg,
-						  shared_ptr<mw::Component> child) {};
-	
-	shared_ptr<Eyelink> shared_from_this() { return dynamic_pointer_cast<Eyelink>(IODevice::shared_from_this()); }
 };
 
 #endif 
