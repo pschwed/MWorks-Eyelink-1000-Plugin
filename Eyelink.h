@@ -80,6 +80,30 @@ protected:
 	
 
 public:
+    static const std::string TAG;
+    static const std::string RX;
+    static const std::string RY;
+    static const std::string LX;
+    static const std::string LY;
+    static const std::string EX;
+    static const std::string EY;
+    static const std::string EZ;
+    static const std::string H_RX;
+    static const std::string H_RY;
+    static const std::string H_LX;
+    static const std::string H_LY;
+    static const std::string P_RX;
+    static const std::string P_RY;
+    static const std::string P_LX;
+    static const std::string P_LY;
+    static const std::string P_R;
+    static const std::string P_L;
+    static const std::string EYE_DIST;
+    static const std::string Z_DIST;
+    static const std::string EYE_TIME;
+    static const std::string UPDATE_PERIOD;
+    static const std::string IP;
+    
     static void describeComponent(ComponentInfo &info);
     
     explicit Eyelink(const ParameterValueMap &parameters);

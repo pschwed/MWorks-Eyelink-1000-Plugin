@@ -16,29 +16,29 @@ boost::mutex& Eyelink::EyelinkDriverLock = *(new boost::mutex);
 bool Eyelink::Eyelink_Initialized = false;
 
 
-static const std::string TAG("tag");
-static const std::string RX("eye_rx");
-static const std::string RY("eye_ry");
-static const std::string LX("eye_lx");
-static const std::string LY("eye_ly");
-static const std::string EX("eye_x");
-static const std::string EY("eye_y");
-static const std::string EZ("eye_z");
-static const std::string H_RX("href_rx");
-static const std::string H_RY("href_ry");
-static const std::string H_LX("href_lx");
-static const std::string H_LY("href_ly");
-static const std::string P_RX("pupil_rx");
-static const std::string P_RY("pupil_ry");
-static const std::string P_LX("pupil_lx");
-static const std::string P_LY("pupil_ly");
-static const std::string P_R("pupil_size_r");
-static const std::string P_L("pupil_size_l");
-static const std::string EYE_DIST("eye_dist");
-static const std::string Z_DIST("z_dist");
-static const std::string EYE_TIME("eye_time");
-static const std::string UPDATE_PERIOD("data_interval");
-static const std::string IP("tracker_ip");
+const std::string Eyelink::TAG("tag");
+const std::string Eyelink::RX("eye_rx");
+const std::string Eyelink::RY("eye_ry");
+const std::string Eyelink::LX("eye_lx");
+const std::string Eyelink::LY("eye_ly");
+const std::string Eyelink::EX("eye_x");
+const std::string Eyelink::EY("eye_y");
+const std::string Eyelink::EZ("eye_z");
+const std::string Eyelink::H_RX("href_rx");
+const std::string Eyelink::H_RY("href_ry");
+const std::string Eyelink::H_LX("href_lx");
+const std::string Eyelink::H_LY("href_ly");
+const std::string Eyelink::P_RX("pupil_rx");
+const std::string Eyelink::P_RY("pupil_ry");
+const std::string Eyelink::P_LX("pupil_lx");
+const std::string Eyelink::P_LY("pupil_ly");
+const std::string Eyelink::P_R("pupil_size_r");
+const std::string Eyelink::P_L("pupil_size_l");
+const std::string Eyelink::EYE_DIST("eye_dist");
+const std::string Eyelink::Z_DIST("z_dist");
+const std::string Eyelink::EYE_TIME("eye_time");
+const std::string Eyelink::UPDATE_PERIOD("data_interval");
+const std::string Eyelink::IP("tracker_ip");
 
 
 // External function for scheduling
