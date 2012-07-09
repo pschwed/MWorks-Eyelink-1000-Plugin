@@ -384,7 +384,7 @@ bool Eyelink::startDeviceIO(){
 
 		shared_ptr<Scheduler> scheduler = Scheduler::instance();
 		shared_ptr<Eyelink> this_one = component_shared_from_this<Eyelink>();
-		schedule_node = scheduler->scheduleUS(std::string(FILELINE ": ") + tag,
+		schedule_node = scheduler->scheduleUS(std::string(FILELINE ": ") + getTag(),
 											  (MWorksTime)0, 
 											  update_period, 
 											  M_REPEAT_INDEFINITELY, 
