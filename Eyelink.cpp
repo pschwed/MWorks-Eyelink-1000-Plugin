@@ -96,6 +96,8 @@ Eyelink::Eyelink(const ParameterValueMap &parameters) :
     e_z(parameters[EZ]),
     h_rx(parameters[H_RX]),
     h_ry(parameters[H_RY]),
+    h_lx(parameters[H_LX]),
+    h_ly(parameters[H_LY]),
     p_rx(parameters[P_RX]),
     p_ry(parameters[P_RY]),
     p_lx(parameters[P_LX]),

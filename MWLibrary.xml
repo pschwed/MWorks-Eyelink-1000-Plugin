@@ -2,7 +2,7 @@
   <MWElement name="Eyelink 1k, Socket Link">
     <!-- XPath 2.0 expression defining nodes of this type -->
     <!-- -->
-    <match_signature>iodevice[@type="eyelink" and @data_type='event']</match_signature>
+    <match_signature>iodevice[@type="eyelink"]</match_signature>
     
     <!-- Which super-types does the object belong to -->
     <isa>IODevice</isa>
@@ -20,7 +20,7 @@
     <!-- Payload -->
     <!-- This XML gets inserted when you drop this object into the project -->
     <code>
-      <iodevice tag="Eyelink" priority="" data_type="event" type="eyelink" data_interval="1ms"
+      <iodevice tag="Eyelink" type="eyelink" data_interval="1ms"
 				eye_rx="EYE_raw_right_x" eye_ry="EYE_raw_right_y" eye_lx="EYE_raw_left_x" eye_ly="EYE_raw_left_y"
 				eye_x="EYE_raw_x" eye_y="EYE_raw_y" eye_z="EYE_raw_z"
 				href_rx="EYE_href_right_x" href_ry="EYE_href_right_y" href_lx="EYE_href_left_x" href_ly="EYE_href_left_y"
