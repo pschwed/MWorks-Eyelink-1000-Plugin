@@ -8,10 +8,38 @@
  */
 
 #include "Eyelink.h"
-#include "boost/bind.hpp"
+#include <boost/bind.hpp>
 
-Lockable *Eyelink::EyelinkDriverLock = NULL;
+// Allocate the lock on the heap so it's never destructed
+boost::mutex& Eyelink::EyelinkDriverLock = *(new boost::mutex);
+
 bool Eyelink::Eyelink_Initialized = false;
+
+
+const std::string Eyelink::TAG("tag");
+const std::string Eyelink::RX("eye_rx");
+const std::string Eyelink::RY("eye_ry");
+const std::string Eyelink::LX("eye_lx");
+const std::string Eyelink::LY("eye_ly");
+const std::string Eyelink::EX("eye_x");
+const std::string Eyelink::EY("eye_y");
+const std::string Eyelink::EZ("eye_z");
+const std::string Eyelink::H_RX("href_rx");
+const std::string Eyelink::H_RY("href_ry");
+const std::string Eyelink::H_LX("href_lx");
+const std::string Eyelink::H_LY("href_ly");
+const std::string Eyelink::P_RX("pupil_rx");
+const std::string Eyelink::P_RY("pupil_ry");
+const std::string Eyelink::P_LX("pupil_lx");
+const std::string Eyelink::P_LY("pupil_ly");
+const std::string Eyelink::P_R("pupil_size_r");
+const std::string Eyelink::P_L("pupil_size_l");
+const std::string Eyelink::EYE_DIST("eye_dist");
+const std::string Eyelink::Z_DIST("z_dist");
+const std::string Eyelink::EYE_TIME("eye_time");
+const std::string Eyelink::UPDATE_PERIOD("data_interval");
+const std::string Eyelink::IP("tracker_ip");
+
 
 // External function for scheduling
 void *update_(const shared_ptr<Eyelink> &gp){
@@ -20,75 +48,78 @@ void *update_(const shared_ptr<Eyelink> &gp){
 }
 
 
-Eyelink::Eyelink(const boost::shared_ptr <Scheduler> &a_scheduler,
-				 const boost::shared_ptr <Variable> rx,
-				 const boost::shared_ptr <Variable> ry,
-				 const boost::shared_ptr <Variable> lx,
-				 const boost::shared_ptr <Variable> ly,
-				 const boost::shared_ptr <Variable> gx,
-				 const boost::shared_ptr <Variable> gy,
-				 const boost::shared_ptr <Variable> gz,
-				 const boost::shared_ptr <Variable> hrx,
-				 const boost::shared_ptr <Variable> hry,
-				 const boost::shared_ptr <Variable> hlx,
-				 const boost::shared_ptr <Variable> hly,
-				 const boost::shared_ptr <Variable> prx,
-				 const boost::shared_ptr <Variable> pry,
-				 const boost::shared_ptr <Variable> plx,
-				 const boost::shared_ptr <Variable> ply,
-				 const boost::shared_ptr <Variable> pr,
-				 const boost::shared_ptr <Variable> pl,
-				 const float edist,
-				 const float zdist,
-				 const boost::shared_ptr <Variable> etime,
-				 const MWorksTime update_time,
-				 const string trackerip) {
-	if (Eyelink_Initialized) {
-        merror(M_IODEVICE_MESSAGE_DOMAIN,"Eyelink was previously initialized! Trying again, but this is dangerous!!");
-		Eyelink_Initialized = false;
-    }
-    if (EyelinkDriverLock == NULL) {
-        EyelinkDriverLock = new Lockable();
-    }
-	
-	scheduler = a_scheduler;
-	
-	e_rx = rx;
-	e_ry = ry;
-	e_lx = lx;
-	e_ly = ly;
-	e_x = gx;
-	e_y = gy;
-	e_z = gz;
-	e_time = etime;
-	h_rx = hrx;
-	h_ry = hry;
-	h_lx = hlx;
-	h_ly = hly;
-	p_rx = prx;
-	p_ry = pry;
-	p_lx = plx;
-	p_ly = ply;
-	p_r = pr;
-	p_l = pl;
-	
-	update_period = update_time;
-	
-	e_dist = edist;
-	z_dist = zdist;
-	
-	tracker_ip = trackerip;
-	
-	errors = 0;
-	stopped = true;
-	
+void Eyelink::describeComponent(ComponentInfo &info) {
+    IODevice::describeComponent(info);
+    
+    info.setSignature("iodevice/eyelink");
+    info.setDisplayName("Eyelink 1k, Socket Link");
+    info.setDescription(
+"Eyelink 1000 Plugin.\n"
+"eye_dist = Distance between eyes in raw eyetracker data (1500 is ok)\n"
+"z_dist = Distance from Screen (-1000 is ok)\n"
+"Adjust these values such as the raw x,y,z coordinates are in the range 0..1"
+                        );
+    
+    info.addParameter(RX);
+    info.addParameter(RY);
+    info.addParameter(LX);
+    info.addParameter(LY);
+    info.addParameter(EX);
+    info.addParameter(EY);
+    info.addParameter(EZ);
+    info.addParameter(H_RX);
+    info.addParameter(H_RY);
+    info.addParameter(H_LX);
+    info.addParameter(H_LY);
+    info.addParameter(P_RX);
+    info.addParameter(P_RY);
+    info.addParameter(P_LX);
+    info.addParameter(P_LY);
+    info.addParameter(P_R);
+    info.addParameter(P_L);
+    info.addParameter(EYE_DIST, true, "1500");
+    info.addParameter(Z_DIST, true, "-1000");
+    info.addParameter(EYE_TIME);
+    info.addParameter(UPDATE_PERIOD, "1ms");
+    info.addParameter(IP, true, "10.1.1.2");
 }
+
+
+Eyelink::Eyelink(const ParameterValueMap &parameters) :
+    IODevice(parameters),
+    e_rx(parameters[RX]),
+    e_ry(parameters[RY]),
+    e_lx(parameters[LX]),
+    e_ly(parameters[LY]),
+    e_x(parameters[EX]),
+    e_y(parameters[EY]),
+    e_z(parameters[EZ]),
+    h_rx(parameters[H_RX]),
+    h_ry(parameters[H_RY]),
+    p_rx(parameters[P_RX]),
+    p_ry(parameters[P_RY]),
+    p_lx(parameters[P_LX]),
+    p_ly(parameters[P_LY]),
+    p_r(parameters[P_R]),
+    p_l(parameters[P_L]),
+    e_dist(parameters[EYE_DIST]),
+    z_dist(parameters[Z_DIST]),
+    e_time(parameters[EYE_TIME]),
+    update_period(parameters[UPDATE_PERIOD]),
+    tracker_ip(parameters[IP].str()),
+    clock(Clock::instance()),
+    errors(0),
+    stopped(true)
+{ }
+
 
 bool Eyelink::initialize(){
 	
-	EyelinkDriverLock -> lock();
+    boost::mutex::scoped_lock lock(EyelinkDriverLock);
 	
-    clock = Clock::instance();
+	if (Eyelink_Initialized) {
+        merror(M_IODEVICE_MESSAGE_DOMAIN,"Eyelink was previously initialized! Trying again, but this is dangerous!!");
+    }
 	
     Eyelink_Initialized = false;
     
@@ -126,19 +157,16 @@ bool Eyelink::initialize(){
 	else {
 		merror(M_IODEVICE_MESSAGE_DOMAIN,"Error, Eyelink Connection could not be established");
 	}
-	
-	EyelinkDriverLock->unlock();
 
 	
 	return Eyelink_Initialized;
 }
 
 Eyelink::~Eyelink(){
-	
+    
+    boost::mutex::scoped_lock lock(EyelinkDriverLock);
 
 	if (Eyelink_Initialized) {
-		
-		EyelinkDriverLock->lock();
 	
 		if (!stopped) {
 			mwarning(M_IODEVICE_MESSAGE_DOMAIN,"Eyelink is still running !");
@@ -171,8 +199,6 @@ Eyelink::~Eyelink(){
 			mwarning(M_IODEVICE_MESSAGE_DOMAIN,"Error, Eyelink Shutdown failed");
 		}
 		
-		EyelinkDriverLock->unlock();
-		EyelinkDriverLock = NULL;
 		Eyelink_Initialized = false;
 		
 		mprintf(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink successfully unloaded.");
@@ -186,7 +212,7 @@ Eyelink::~Eyelink(){
 bool Eyelink::update() {
     MWTime inputtime;
     
-	EyelinkDriverLock -> lock();
+    boost::mutex::scoped_lock lock(EyelinkDriverLock);
 	if(eyelink_is_connected())	{
 		while(eyelink_get_next_data(NULL)) {
 			if(eyelink_in_data_block(1,0)) { //only if data contains samples
@@ -339,14 +365,13 @@ bool Eyelink::update() {
 			errors = 0;
 		}
 	}
-	EyelinkDriverLock -> unlock();
 	
 	return true;
 }
 
 
 bool Eyelink::startDeviceIO(){
-	EyelinkDriverLock -> lock();
+    boost::mutex::scoped_lock lock(EyelinkDriverLock);
 	
 	if(eyelink_is_connected() && stopped) {
 		//Eyelink to offline mode
@@ -356,9 +381,10 @@ bool Eyelink::startDeviceIO(){
 			merror(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink does not start!");
 		}
 		
-		
-		shared_ptr<Eyelink> this_one = shared_from_this();
-		schedule_node = scheduler->scheduleUS(std::string(FILELINE ": ") + tag,
+
+		shared_ptr<Scheduler> scheduler = Scheduler::instance();
+		shared_ptr<Eyelink> this_one = component_shared_from_this<Eyelink>();
+		schedule_node = scheduler->scheduleUS(std::string(FILELINE ": ") + getTag(),
 											  (MWorksTime)0, 
 											  update_period, 
 											  M_REPEAT_INDEFINITELY, 
@@ -375,15 +401,13 @@ bool Eyelink::startDeviceIO(){
 	else {
 		mwarning(M_IODEVICE_MESSAGE_DOMAIN, "Warning! Could not start EyeLink! (StartIO)");
 	}
-	
-	EyelinkDriverLock -> unlock();
 		
 	return !stopped;
 }
 
 
 bool Eyelink::stopDeviceIO() {
-	EyelinkDriverLock -> lock();
+    boost::mutex::scoped_lock lock(EyelinkDriverLock);
 	
 	if(!stopped) {
 		
@@ -425,8 +449,6 @@ bool Eyelink::stopDeviceIO() {
 		stopped = true;
 		mprintf(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink successfully stopped.");
 	}
-	
-	EyelinkDriverLock -> unlock();
 	
     return stopped;
 }

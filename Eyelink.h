@@ -10,8 +10,9 @@
 #ifndef Eyelink_H_
 #define Eyelink_H_
 
-#include <MWorksCore/Plugin.h>
 #include <MWorksCore/IODevice.h>
+
+#include <boost/thread/mutex.hpp>
 
 #include <eyelink_core/eyelink.h>
 #include <eyelink_core/core_expt.h>
@@ -20,11 +21,10 @@ using namespace mw;
 
 class Eyelink : public IODevice {
 	
-	static Lockable *EyelinkDriverLock;
+	static boost::mutex& EyelinkDriverLock;
     static bool Eyelink_Initialized;
 
 protected:
-	boost::shared_ptr <Scheduler> scheduler;
     boost::shared_ptr <ScheduleTask> schedule_node;
     boost::shared_ptr <Clock> clock;
 	
@@ -45,11 +45,11 @@ protected:
 	boost::shared_ptr <Variable> p_ly;
 	boost::shared_ptr <Variable> p_r;
 	boost::shared_ptr <Variable> p_l;
-	float e_dist;
-	float z_dist;
+	const float e_dist;
+	const float z_dist;
 	boost::shared_ptr <Variable> e_time;
 	
-	MWorksTime update_period;
+	const MWorksTime update_period;
 	string tracker_ip;
 		
 	FSAMPLE evt;         // buffer to hold sample and event data
@@ -80,29 +80,34 @@ protected:
 	
 
 public:
-	Eyelink(const boost::shared_ptr <Scheduler> &a_scheduler,
-			const boost::shared_ptr <Variable> rx,
-			const boost::shared_ptr <Variable> ry,
-			const boost::shared_ptr <Variable> lx,
-			const boost::shared_ptr <Variable> ly,
-			const boost::shared_ptr <Variable> gx,
-			const boost::shared_ptr <Variable> gy,
-			const boost::shared_ptr <Variable> gz,
-			const boost::shared_ptr <Variable> hrx,
-			const boost::shared_ptr <Variable> hry,
-			const boost::shared_ptr <Variable> hlx,
-			const boost::shared_ptr <Variable> hly,
-			const boost::shared_ptr <Variable> prx,
-			const boost::shared_ptr <Variable> pry,
-			const boost::shared_ptr <Variable> plx,
-			const boost::shared_ptr <Variable> ply,
-			const boost::shared_ptr <Variable> pr,
-			const boost::shared_ptr <Variable> py,
-			const float edist,
-			const float zdist,
-			const boost::shared_ptr <Variable> etime,
-			const MWorksTime update_time,
-			const string trackerip);
+    static const std::string TAG;
+    static const std::string RX;
+    static const std::string RY;
+    static const std::string LX;
+    static const std::string LY;
+    static const std::string EX;
+    static const std::string EY;
+    static const std::string EZ;
+    static const std::string H_RX;
+    static const std::string H_RY;
+    static const std::string H_LX;
+    static const std::string H_LY;
+    static const std::string P_RX;
+    static const std::string P_RY;
+    static const std::string P_LX;
+    static const std::string P_LY;
+    static const std::string P_R;
+    static const std::string P_L;
+    static const std::string EYE_DIST;
+    static const std::string Z_DIST;
+    static const std::string EYE_TIME;
+    static const std::string UPDATE_PERIOD;
+    static const std::string IP;
+    
+    static void describeComponent(ComponentInfo &info);
+    
+    explicit Eyelink(const ParameterValueMap &parameters);
+    
 	~Eyelink();
 
 	virtual bool initialize();
@@ -110,11 +115,6 @@ public:
 	virtual bool startDeviceIO();
 	virtual bool stopDeviceIO();
 	
-	virtual void addChild(std::map<std::string, std::string> parameters,
-						  mw::ComponentRegistry *reg,
-						  shared_ptr<mw::Component> child) {};
-	
-	shared_ptr<Eyelink> shared_from_this() { return dynamic_pointer_cast<Eyelink>(IODevice::shared_from_this()); }
 };
 
 #endif 
