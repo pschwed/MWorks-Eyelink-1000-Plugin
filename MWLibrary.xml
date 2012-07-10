@@ -2,7 +2,7 @@
   <MWElement name="Eyelink 1k, Socket Link">
     <!-- XPath 2.0 expression defining nodes of this type -->
     <!-- -->
-    <match_signature>iodevice[@type="eyelink" and @data_type='event']</match_signature>
+    <match_signature>iodevice[@type="eyelink"]</match_signature>
     
     <!-- Which super-types does the object belong to -->
     <isa>IODevice</isa>
