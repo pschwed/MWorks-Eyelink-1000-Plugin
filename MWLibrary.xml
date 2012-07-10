@@ -2,7 +2,7 @@
   <MWElement name="Eyelink 1k, Socket Link">
     <!-- XPath 2.0 expression defining nodes of this type -->
     <!-- -->
-    <match_signature>iodevice[@type="eyelink"]</match_signature>
+    <match_signature>iodevice[@type="eyelink" and @data_type='event']</match_signature>
     
     <!-- Which super-types does the object belong to -->
     <isa>IODevice</isa>
@@ -28,7 +28,6 @@
     <!-- Payload -->
     <!-- This XML gets inserted when you drop this object into the project -->
     <code>
-<<<<<<< HEAD
       <iodevice tag="Eyelink 1000" type="eyelink" data_interval="1ms"
 				eye_rx="" eye_ry="" eye_lx="" eye_ly=""
 				eye_x="" eye_y="" eye_z=""
@@ -36,15 +35,6 @@
 				pupil_rx="" pupil_ry="" pupil_lx="" pupil_ly=""
 				pupil_size_r="" pupil_size_l=""
 				eye_time=""
-=======
-      <iodevice tag="Eyelink" type="eyelink" data_interval="1ms"
-				eye_rx="EYE_raw_right_x" eye_ry="EYE_raw_right_y" eye_lx="EYE_raw_left_x" eye_ly="EYE_raw_left_y"
-				eye_x="EYE_raw_x" eye_y="EYE_raw_y" eye_z="EYE_raw_z"
-				href_rx="EYE_href_right_x" href_ry="EYE_href_right_y" href_lx="EYE_href_left_x" href_ly="EYE_href_left_y"
-				pupil_rx="EYE_pupil_right_x" pupil_ry="EYE_pupil_right_y" pupil_lx="EYE_pupil_left_x" pupil_ly="EYE_pupil_left_y"
-				pupil_size_r="EYE_pupil_size_right" pupil_size_l="EYE_pupil_size_left"
-				eye_time="EYE_sample_time"
->>>>>>> 5d6944ecb3ad257b3f012eebdce78261195dbed8
 				eye_dist="1500" z_dist="-1000"
 				tracker_ip="10.1.1.2"/>
       <!-- <action type="my_mw_component" tag="My MW Action" />
