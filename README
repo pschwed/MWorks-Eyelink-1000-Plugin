@@ -1,16 +1,5 @@
 This is the first version of my Eyelink 1000 Plugin. It comes with no warranty or guarantee of proper function!!
 
-2011 Feb 09
-
-If a eye tracker packet contains no data for one parameter, the MISSING_DATA value will also be written to the assigned variables. This happens only when the variable does not already contain this value.
-
-MWLibrary entry was edited to contain predefined names for all the required variables. This is the notation we like to use in our lab and it is still possible to change that after inserting the plugin.
-
-2011 Mar 21
-
-minor changes in predefined varible names and types
-
-
 ** Installing the EyeLink Developers Kit **
 
 In order to compile and use this plugin, you must install the required EyeLink frameworks.
@@ -28,3 +17,31 @@ and download the file "EyeLink_Developers_Kit_for_Mac_OSX_x64.dmg".  Double-clic
   EyeLink/Frameworks/eyelink_core.framework
   SDL/Frameworks/SDL.framework
   SDL/Frameworks/SDL_gfx.framework
+
+
+** Functionality **
+2012 Jul 09:
+
+Once a connection to the Eyelink was established at plugin load time, all outputs will be initialized to default values.
+Link data reception will begin upon starting of the IO device. Packages will be requested from the Eyelink driver in intervals specified by data_interval. The time_us timestamp of a package thus reflects the MWorks time a package was read from the driver, the actual time of the sample is written in tracker time units to "eye_time".
+Link data reception will be terminated when stopping of IO device is requested. All outputs will be set to default (missing data) values.
+
+This plugin also computes 3D eye position if the tracker runs in binocular mode. Parameters eye_dist and z_dist specify the interocular distance and observer distance in arbitrary (eye tracker) units. You should adjust those values so that the trackable range of your system roughly corresponds to the intervals 0 < x|y|z < 1.
+
+Known bugs:
+- if no connection can be established, the server might crash (not immediately, but once the experiment unloads or a new experiment loads)
+- if an update interval <.5ms is requested, strange things start to happen with eye_time (although the eye position still updates). 
+- if the connection is lost during recording, the experiment needs to be unloaded completely in order to reconnect the tracker.
+- depending on the configuration of your tracker, pupil coordinates might contain no values
+
+
+** older stuff ** 
+2011 Feb 09
+
+If a eye tracker packet contains no data for one parameter, the MISSING_DATA value will also be written to the assigned variables. This happens only when the variable does not already contain this value.
+
+MWLibrary entry was edited to contain predefined names for all the required variables. This is the notation we like to use in our lab and it is still possible to change that after inserting the plugin.
+
+2011 Mar 21
+
+minor changes in predefined varible names and types

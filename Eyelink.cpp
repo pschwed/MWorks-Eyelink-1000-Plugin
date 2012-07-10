@@ -54,10 +54,17 @@ void Eyelink::describeComponent(ComponentInfo &info) {
     info.setSignature("iodevice/eyelink");
     info.setDisplayName("Eyelink 1k, Socket Link");
     info.setDescription(
-"Eyelink 1000 Plugin.\n"
-"eye_dist = Distance between eyes in raw eyetracker data (1500 is ok)\n"
-"z_dist = Distance from Screen (-1000 is ok)\n"
-"Adjust these values such as the raw x,y,z coordinates are in the range 0..1"
+"Eyelink 1000 Plugin. INSTRUCTIONS BELOW\n"
+"REQUIRED PARAMETERS:\n"
+"eye_dist = Distance between eyes in arbitrary (eyetracker) units (1500 is ok to start with)\n"
+"z_dist = Distance from Screen in same arbitrary units (-1000 is ok to start with)\n"
+"Adjust these values such as the raw x,y,z coordinates are in the range 0..1\n"
+"data_interval should not be too small (i.e. not shorter than 0.5 ms)\n"
+"tracker_ip contains the trackers IP, check for working connection using SR-Research's 'simpleexample'\n"
+"OUTPUT:\n"
+"eye_x/_y/_z is the midpoint of the shortest connecting line that is orthogonal to both gaze vectors "
+"assuming the tracker runs in binocular mode. Otherwise these values will be empty.\n"
+"all other output parameters are specified and described in the Eyelink 1000 manual.\n"
                         );
     
     info.addParameter(RX);
@@ -80,7 +87,7 @@ void Eyelink::describeComponent(ComponentInfo &info) {
     info.addParameter(EYE_DIST, true, "1500");
     info.addParameter(Z_DIST, true, "-1000");
     info.addParameter(EYE_TIME);
-    info.addParameter(UPDATE_PERIOD, "1ms");
+    info.addParameter(UPDATE_PERIOD, true, "1ms");
     info.addParameter(IP, true, "10.1.1.2");
 }
 
@@ -138,7 +145,7 @@ bool Eyelink::initialize(){
 		
 		// verify the name
 		if( eyelink_get_node(0,&node) != OK_RESULT )
-			merror(M_IODEVICE_MESSAGE_DOMAIN,"Error, EyeLink didn't acceppt our name");
+			merror(M_IODEVICE_MESSAGE_DOMAIN,"Error, EyeLink doesn't respond");
 		else eyemsg_printf((char*)("%s connected"), node.name);
 		
 		// Enable link data reception
@@ -157,6 +164,26 @@ bool Eyelink::initialize(){
 	else {
 		merror(M_IODEVICE_MESSAGE_DOMAIN,"Error, Eyelink Connection could not be established");
 	}
+    
+    // initialize all the outputs, set tracker time to -1
+    e_time -> setValue( -1.0f );
+    e_rx -> setValue( (float)MISSING_DATA );
+    e_ry -> setValue( (float)MISSING_DATA );
+    e_lx -> setValue( (float)MISSING_DATA );
+    e_ly -> setValue( (float)MISSING_DATA );
+    e_x -> setValue( (float)MISSING_DATA );
+    e_y -> setValue( (float)MISSING_DATA );
+    e_z -> setValue( (float)MISSING_DATA );
+    h_rx -> setValue( (float)MISSING_DATA );
+    h_ry -> setValue( (float)MISSING_DATA );
+    h_lx -> setValue( (float)MISSING_DATA );
+    h_ly -> setValue( (float)MISSING_DATA );
+    p_rx -> setValue( (float)MISSING_DATA );
+    p_ry -> setValue( (float)MISSING_DATA );
+    p_lx -> setValue( (float)MISSING_DATA );
+    p_ly -> setValue( (float)MISSING_DATA );
+    p_r -> setValue( (float)MISSING_DATA );
+    p_l -> setValue( (float)MISSING_DATA );
 
 	
 	return Eyelink_Initialized;
@@ -192,7 +219,7 @@ Eyelink::~Eyelink(){
 		
 			//close_eyelink_system();
 			
-			mprintf(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink-1000 System Disconnected.");
+            mprintf(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink %d System Version %s disconnected.",tracker_version,version_info);
 			 
 		}
 		else {
@@ -200,13 +227,8 @@ Eyelink::~Eyelink(){
 		}
 		
 		Eyelink_Initialized = false;
-		
-		mprintf(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink successfully unloaded.");
-	}
-	else {
-		merror(M_IODEVICE_MESSAGE_DOMAIN,"Error, Eyelink Shutdown failed because it was not initialized!");
-	}
-	 
+        
+    }
 }
 
 bool Eyelink::update() {
@@ -426,24 +448,24 @@ bool Eyelink::stopDeviceIO() {
 		}
 		else mwarning(M_IODEVICE_MESSAGE_DOMAIN, "Warning! Could not stop EyeLink! Connection Lost!! (StopIO)");
 		
-		e_time -> setValue( 0.0f );
-		e_rx -> setValue( 0.0f );
-		e_ry -> setValue( 0.0f );
-		e_lx -> setValue( 0.0f );
-		e_ly -> setValue( 0.0f );
-		e_x -> setValue( 0.0f );
-		e_y -> setValue( 0.0f );
-		e_z -> setValue( 0.0f );
-		h_rx -> setValue( 0.0f );
-		h_ry -> setValue( 0.0f );
-		h_lx -> setValue( 0.0f );
-		h_ly -> setValue( 0.0f );
-		p_rx -> setValue( 0.0f );
-		p_ry -> setValue( 0.0f );
-		p_lx -> setValue( 0.0f );
-		p_ly -> setValue( 0.0f );
-		p_r -> setValue( 0.0f );
-		p_l -> setValue( 0.0f );
+		e_time -> setValue( (float)MISSING_DATA );
+		e_rx -> setValue( (float)MISSING_DATA );
+		e_ry -> setValue( (float)MISSING_DATA );
+		e_lx -> setValue( (float)MISSING_DATA );
+		e_ly -> setValue( (float)MISSING_DATA );
+		e_x -> setValue( (float)MISSING_DATA );
+		e_y -> setValue( (float)MISSING_DATA );
+		e_z -> setValue( (float)MISSING_DATA );
+		h_rx -> setValue( (float)MISSING_DATA );
+		h_ry -> setValue( (float)MISSING_DATA );
+		h_lx -> setValue( (float)MISSING_DATA );
+		h_ly -> setValue( (float)MISSING_DATA );
+		p_rx -> setValue( (float)MISSING_DATA );
+		p_ry -> setValue( (float)MISSING_DATA );
+		p_lx -> setValue( (float)MISSING_DATA );
+		p_ly -> setValue( (float)MISSING_DATA );
+		p_r -> setValue( (float)MISSING_DATA );
+		p_l -> setValue( (float)MISSING_DATA );
 		
 		
 		stopped = true;
