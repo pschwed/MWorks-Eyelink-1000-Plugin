@@ -14,7 +14,7 @@
         eye_dist = Distance between eyes in arbitrary (eyetracker) units (1500 is ok to start with)
         z_dist = Distance from Screen in same arbitrary units (-1000 is ok to start with)
         Adjust these values such as the raw x,y,z coordinates are in the range 0..1
-        data_interval should not be too small (i.e. not shorter than 0.5 ms)
+        data_interval should not be too short, but faster than tracker's sampling rate
         tracker_ip contains the trackers IP address, check for working connection using SR-Research's 'simpleexample'
         
         OUTPUT:

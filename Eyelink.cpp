@@ -167,6 +167,7 @@ bool Eyelink::initialize(){
 		merror(M_IODEVICE_MESSAGE_DOMAIN,"Error, Eyelink Connection could not be established");
 	}
     
+    /*
     // initialize all the outputs, set tracker time to -1
     e_time -> setValue( -1.0f );
     e_rx -> setValue( (float)MISSING_DATA );
@@ -186,7 +187,7 @@ bool Eyelink::initialize(){
     p_ly -> setValue( (float)MISSING_DATA );
     p_r -> setValue( (float)MISSING_DATA );
     p_l -> setValue( (float)MISSING_DATA );
-
+    */
 	
 	return Eyelink_Initialized;
 }

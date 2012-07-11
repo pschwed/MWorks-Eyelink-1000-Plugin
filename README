@@ -22,7 +22,7 @@ and download the file "EyeLink_Developers_Kit_for_Mac_OSX_x64.dmg".  Double-clic
 ** Functionality **
 2012 Jul 09:
 
-Once a connection to the Eyelink was established at plugin load time, all outputs will be initialized to default values.
+Once a connection to the Eyelink was established at plugin load time, the tracker goes into 'Link Open' mode.
 Link data reception will begin upon starting of the IO device. Packages will be requested from the Eyelink driver in intervals specified by data_interval. The time_us timestamp of a package thus reflects the MWorks time a package was read from the driver, the actual time of the sample is written in tracker time units to "eye_time".
 Link data reception will be terminated when stopping of IO device is requested. All outputs will be set to default (missing data) values.
 
