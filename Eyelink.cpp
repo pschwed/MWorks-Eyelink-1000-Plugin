@@ -54,17 +54,17 @@ void Eyelink::describeComponent(ComponentInfo &info) {
     info.setSignature("iodevice/eyelink");
     info.setDisplayName("Eyelink 1k, Socket Link");
     info.setDescription(
-"Eyelink 1000 Plugin. INSTRUCTIONS BELOW\n"
-"REQUIRED PARAMETERS:\n"
-"eye_dist = Distance between eyes in arbitrary (eyetracker) units (1500 is ok to start with)\n"
-"z_dist = Distance from Screen in same arbitrary units (-1000 is ok to start with)\n"
-"Adjust these values such as the raw x,y,z coordinates are in the range 0..1\n"
-"data_interval should not be too small (i.e. not shorter than 0.5 ms)\n"
-"tracker_ip contains the trackers IP, check for working connection using SR-Research's 'simpleexample'\n"
-"OUTPUT:\n"
-"eye_x/_y/_z is the midpoint of the shortest connecting line that is orthogonal to both gaze vectors "
-"assuming the tracker runs in binocular mode. Otherwise these values will be empty.\n"
-"all other output parameters are specified and described in the Eyelink 1000 manual.\n"
+                        "Eyelink 1000 Plugin. INSTRUCTIONS BELOW\n"
+                        "REQUIRED PARAMETERS:\n"
+                        "eye_dist = Distance between eyes in arbitrary (eyetracker) units (1500 is ok to start with)\n"
+                        "z_dist = Distance from Screen in same arbitrary units (-1000 is ok to start with)\n"
+                        "Adjust these values such as the raw x,y,z coordinates are in the range 0..1\n"
+                        "data_interval should not be too small (i.e. not shorter than 0.5 ms)\n"
+                        "tracker_ip contains the trackers IP, check for working connection using SR-Research's 'simpleexample'\n"
+                        "OUTPUT:\n"
+                        "eye_x/_y/_z is the midpoint of the shortest connecting line that is orthogonal to both gaze vectors "
+                        "assuming the tracker runs in binocular mode. Otherwise these values will be empty.\n"
+                        "all other output parameters are specified and described in the Eyelink 1000 manual.\n"
                         );
     
     info.addParameter(RX);
@@ -93,32 +93,31 @@ void Eyelink::describeComponent(ComponentInfo &info) {
 
 
 Eyelink::Eyelink(const ParameterValueMap &parameters) :
-    IODevice(parameters),
-    e_rx(parameters[RX]),
-    e_ry(parameters[RY]),
-    e_lx(parameters[LX]),
-    e_ly(parameters[LY]),
-    e_x(parameters[EX]),
-    e_y(parameters[EY]),
-    e_z(parameters[EZ]),
-    h_rx(parameters[H_RX]),
-    h_ry(parameters[H_RY]),
-    h_lx(parameters[H_LX]),
-    h_ly(parameters[H_LY]),
-    p_rx(parameters[P_RX]),
-    p_ry(parameters[P_RY]),
-    p_lx(parameters[P_LX]),
-    p_ly(parameters[P_LY]),
-    p_r(parameters[P_R]),
-    p_l(parameters[P_L]),
-    e_dist(parameters[EYE_DIST]),
-    z_dist(parameters[Z_DIST]),
-    e_time(parameters[EYE_TIME]),
-    update_period(parameters[UPDATE_PERIOD]),
-    tracker_ip(parameters[IP].str()),
-    clock(Clock::instance()),
-    errors(0),
-    stopped(true)
+IODevice(parameters),
+e_rx(parameters[RX]),
+e_ry(parameters[RY]),
+e_lx(parameters[LX]),
+e_ly(parameters[LY]),
+e_x(parameters[EX]),
+e_y(parameters[EY]),
+e_z(parameters[EZ]),
+h_rx(parameters[H_RX]),
+h_ry(parameters[H_RY]),
+h_lx(parameters[H_LX]),
+h_ly(parameters[H_LY]),
+p_rx(parameters[P_RX]),
+p_ry(parameters[P_RY]),
+p_lx(parameters[P_LX]),
+p_ly(parameters[P_LY]),
+p_r(parameters[P_R]),
+p_l(parameters[P_L]),
+e_dist(parameters[EYE_DIST]),
+z_dist(parameters[Z_DIST]),
+e_time(parameters[EYE_TIME]),
+update_period(parameters[UPDATE_PERIOD]),
+tracker_ip(parameters[IP].str()),
+clock(Clock::instance()),
+errors(0)
 { }
 
 
@@ -141,6 +140,20 @@ bool Eyelink::initialize(){
 	    merror(M_IODEVICE_MESSAGE_DOMAIN,"Failed to connect to Tracker at %s", tracker_ip.c_str());
 	else {
 		ELINKNODE node;
+        
+        // generate data file name
+        time_t now = time(NULL);
+        struct tm* t = gmtime(&now);
+        
+        sprintf(data_file_name, "%02d%06d.edf",(t->tm_year-100),t->tm_yday*1440 + t->tm_hour*60 + t->tm_min);
+        //YYMMMMMM : YY=Years since 2k, MMMMMM=Minutes in current year
+        
+        if ( open_data_file( data_file_name ) ) {
+            mwarning(M_IODEVICE_MESSAGE_DOMAIN,"Eyelink datafile setting failed (%s)",data_file_name);
+        }
+        else {
+            mprintf(M_IODEVICE_MESSAGE_DOMAIN,"Eyelink logs to local file %s",data_file_name);
+        }
 		
 		// tell the tracker who we are
 		eyelink_set_name((char*)("MWorks_over_Socket"));
@@ -162,46 +175,28 @@ bool Eyelink::initialize(){
 		mprintf(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink %d System Version %s connected via Socket",tracker_version,version_info);
 		
 		Eyelink_Initialized = true;
+        stopped = true;
 	}
 	else {
 		merror(M_IODEVICE_MESSAGE_DOMAIN,"Error, Eyelink Connection could not be established");
 	}
-    
-    /*
-    // initialize all the outputs, set tracker time to -1
-    e_time -> setValue( -1.0f );
-    e_rx -> setValue( (float)MISSING_DATA );
-    e_ry -> setValue( (float)MISSING_DATA );
-    e_lx -> setValue( (float)MISSING_DATA );
-    e_ly -> setValue( (float)MISSING_DATA );
-    e_x -> setValue( (float)MISSING_DATA );
-    e_y -> setValue( (float)MISSING_DATA );
-    e_z -> setValue( (float)MISSING_DATA );
-    h_rx -> setValue( (float)MISSING_DATA );
-    h_ry -> setValue( (float)MISSING_DATA );
-    h_lx -> setValue( (float)MISSING_DATA );
-    h_ly -> setValue( (float)MISSING_DATA );
-    p_rx -> setValue( (float)MISSING_DATA );
-    p_ry -> setValue( (float)MISSING_DATA );
-    p_lx -> setValue( (float)MISSING_DATA );
-    p_ly -> setValue( (float)MISSING_DATA );
-    p_r -> setValue( (float)MISSING_DATA );
-    p_l -> setValue( (float)MISSING_DATA );
-    */
 	
 	return Eyelink_Initialized;
 }
 
+
 Eyelink::~Eyelink(){
     
     boost::mutex::scoped_lock lock(EyelinkDriverLock);
-
+    
 	if (Eyelink_Initialized) {
-	
+        
 		if (!stopped) {
 			mwarning(M_IODEVICE_MESSAGE_DOMAIN,"Eyelink is still running !");
+            //eyelink stop recording
+			if(eyelink_is_connected()) { stop_recording(); }
 		}
-	
+        
 		if (schedule_node) {
 			schedule_node->cancel();
 			schedule_node.reset();
@@ -213,17 +208,19 @@ Eyelink::~Eyelink(){
 			set_offline_mode();
 			// close any open data files
 			
-			eyecmd_printf((char*)("close_data_file"));
+			if ( close_data_file() == 0 ) {
+                mprintf(M_IODEVICE_MESSAGE_DOMAIN,"Eyelink closed data file %s.",data_file_name);
+            }
 			
 			if (eyelink_close(1)) // disconnect from tracker
 			{
 				merror(M_IODEVICE_MESSAGE_DOMAIN, "Could not close Eyelink connection");
 			}
-		
+            
 			//close_eyelink_system();
 			
             mprintf(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink %d System Version %s disconnected.",tracker_version,version_info);
-			 
+            
 		}
 		else {
 			mwarning(M_IODEVICE_MESSAGE_DOMAIN,"Error, Eyelink Shutdown failed");
@@ -244,13 +241,17 @@ bool Eyelink::update() {
 				eyelink_get_float_data(&evt);
                 
                 inputtime = this->clock->getCurrentTimeUS();
+                
+                // send the current time together with the sample time back to the tracker (and log it there)
+                eyemsg_printf((char*)"SAMPLE %ld received %ld",(long double)evt.time ,(long double)inputtime);
 				
+                // now update all the variables
 				e_time -> setValue( (float)evt.time ,inputtime);
 				
 				if( evt.gx[RIGHT_EYE] != MISSING_DATA &&
-				    evt.gy[RIGHT_EYE] != MISSING_DATA &&
-				    evt.gx[LEFT_EYE] != MISSING_DATA &&
-				    evt.gy[LEFT_EYE] != MISSING_DATA ) {
+                   evt.gy[RIGHT_EYE] != MISSING_DATA &&
+                   evt.gx[LEFT_EYE] != MISSING_DATA &&
+                   evt.gy[LEFT_EYE] != MISSING_DATA ) {
 					
 					p4321z = -z_dist / e_dist;
 					
@@ -269,17 +270,17 @@ bool Eyelink::update() {
 					if (abs(denom) > 1e-6) {
 						
 						numer = p43x * d4321 - p21x * d4343;
-					
+                        
 						mua = numer / denom;
 						mub = (p43x + d4321 * mua) / d4343;
-					
+                        
 						pax = 1 + mua * p21x;
 						pay = mua * p21y;
 						paz = -p4321z + mua * p4321z;
 						pbx = mub * p43x;
 						pby = mub * p43y;
 						pbz = -p4321z + mub * p4321z;
-					
+                        
 						e_x -> setValue(pax + 0.5*(pbx-pax),inputtime);
 						e_y -> setValue(pay + 0.5*(pby-pay),inputtime);
 						e_z -> setValue(paz + 0.5*(pbz-paz),inputtime);
@@ -295,7 +296,7 @@ bool Eyelink::update() {
 				}
 				
 				if( evt.gx[RIGHT_EYE] != MISSING_DATA &&
-				    evt.gy[RIGHT_EYE] != MISSING_DATA ){
+                   evt.gy[RIGHT_EYE] != MISSING_DATA ){
 					e_rx -> setValue( evt.gx[RIGHT_EYE] ,inputtime);
 					e_ry -> setValue( evt.gy[RIGHT_EYE] ,inputtime);
 				}
@@ -307,7 +308,7 @@ bool Eyelink::update() {
 				}
 				
 				if( evt.gx[LEFT_EYE] != MISSING_DATA &&
-				    evt.gy[LEFT_EYE] != MISSING_DATA ){
+                   evt.gy[LEFT_EYE] != MISSING_DATA ){
 					e_lx -> setValue( evt.gx[LEFT_EYE] ,inputtime);
 					e_ly -> setValue( evt.gy[LEFT_EYE] ,inputtime);
 				}
@@ -319,7 +320,7 @@ bool Eyelink::update() {
 				}
 				
 				if( evt.hx[RIGHT_EYE] != -7936.0f &&
-				    evt.hy[RIGHT_EYE] != -7936.0f ){
+                   evt.hy[RIGHT_EYE] != -7936.0f ){
 					h_rx -> setValue( evt.hx[RIGHT_EYE] ,inputtime);
 					h_ry -> setValue( evt.hy[RIGHT_EYE] ,inputtime);
 				}
@@ -331,7 +332,7 @@ bool Eyelink::update() {
 				}
 				
 				if( evt.hx[LEFT_EYE] != -7936.0f &&
-				    evt.hy[LEFT_EYE] != -7936.0f ){
+                   evt.hy[LEFT_EYE] != -7936.0f ){
 					h_lx -> setValue( evt.hx[LEFT_EYE] ,inputtime);
 					h_ly -> setValue( evt.hy[LEFT_EYE] ,inputtime);
 				}
@@ -343,7 +344,7 @@ bool Eyelink::update() {
 				}
 				
 				if( evt.px[RIGHT_EYE] != MISSING_DATA &&
-				    evt.py[RIGHT_EYE] != MISSING_DATA ){
+                   evt.py[RIGHT_EYE] != MISSING_DATA ){
 					p_rx -> setValue( evt.px[RIGHT_EYE] ,inputtime);
 					p_ry -> setValue( evt.py[RIGHT_EYE] ,inputtime);
 				}
@@ -355,7 +356,7 @@ bool Eyelink::update() {
 				}
 				
 				if( evt.px[LEFT_EYE] != MISSING_DATA &&
-				    evt.py[LEFT_EYE] != MISSING_DATA ){
+                   evt.py[LEFT_EYE] != MISSING_DATA ){
 					p_lx -> setValue( evt.px[LEFT_EYE] ,inputtime);
 					p_ly -> setValue( evt.py[LEFT_EYE] ,inputtime);
 				}
@@ -402,11 +403,11 @@ bool Eyelink::startDeviceIO(){
 		//Eyelink to offline mode
 		set_offline_mode();
 		// Eyelink to record mode
-		if( start_recording(0,0,1,0) ) {
+		if( start_recording(0,1,1,0) ) {
 			merror(M_IODEVICE_MESSAGE_DOMAIN, "Eyelink does not start!");
 		}
 		
-
+        
 		shared_ptr<Scheduler> scheduler = Scheduler::instance();
 		shared_ptr<Eyelink> this_one = component_shared_from_this<Eyelink>();
 		schedule_node = scheduler->scheduleUS(std::string(FILELINE ": ") + getTag(),
@@ -426,7 +427,7 @@ bool Eyelink::startDeviceIO(){
 	else {
 		mwarning(M_IODEVICE_MESSAGE_DOMAIN, "Warning! Could not start EyeLink! (StartIO)");
 	}
-		
+    
 	return !stopped;
 }
 
@@ -444,8 +445,6 @@ bool Eyelink::stopDeviceIO() {
 		if(eyelink_is_connected()) {
 			//eyelink stop recording
 			stop_recording();
-			//eyelink has to close data file
-			eyecmd_printf((char*)("close_data_file"));
 			//go to eyelink offline mode
 			set_offline_mode();
 		}

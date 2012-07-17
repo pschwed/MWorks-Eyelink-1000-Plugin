@@ -55,6 +55,7 @@ protected:
 	FSAMPLE evt;         // buffer to hold sample and event data
 	char version_info[256];
 	int tracker_version;
+    char data_file_name[11];
 	bool stopped;
 	int errors;
 	
