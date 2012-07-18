@@ -28,15 +28,14 @@
     <!-- Payload -->
     <!-- This XML gets inserted when you drop this object into the project -->
     <code>
-      <iodevice tag="Eyelink 1000" type="eyelink" data_interval="1ms"
+      <iodevice tag="Eyelink 1000" type="eyelink" data_interval="1ms" tracker_ip="10.1.1.2"
 				eye_rx="" eye_ry="" eye_lx="" eye_ly=""
 				eye_x="" eye_y="" eye_z=""
 				href_rx="" href_ry="" href_lx="" href_ly=""
 				pupil_rx="" pupil_ry="" pupil_lx="" pupil_ly=""
 				pupil_size_r="" pupil_size_l=""
 				eye_time=""
-				eye_dist="1500" z_dist="-1000"
-				tracker_ip="10.1.1.2"/>
+				eye_dist="1500" z_dist="-1000"/>
       <!-- <action type="my_mw_component" tag="My MW Action" />
         ... you get the idea ...
         ...
