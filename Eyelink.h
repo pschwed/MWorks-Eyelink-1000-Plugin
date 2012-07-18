@@ -58,6 +58,7 @@ protected:
     char data_file_name[11];
 	bool stopped;
 	int errors;
+    unsigned int ack_msg_counter;
 	
 	// vars for coordinate transformation
 	float p4321z;

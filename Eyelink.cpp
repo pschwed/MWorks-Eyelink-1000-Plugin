@@ -117,7 +117,8 @@ e_time(parameters[EYE_TIME]),
 update_period(parameters[UPDATE_PERIOD]),
 tracker_ip(parameters[IP].str()),
 clock(Clock::instance()),
-errors(0)
+errors(0),
+ack_msg_counter(0)
 { }
 
 
@@ -242,8 +243,9 @@ bool Eyelink::update() {
                 
                 inputtime = this->clock->getCurrentTimeUS();
                 
-                // send the current time together with the sample time back to the tracker (and log it there)
-                eyemsg_printf((char*)"SAMPLE %ld received %ld",(long double)evt.time ,(long double)inputtime);
+                // occasionally, send the current time together with the sample time back to the tracker (and log it there)
+                if ( ack_msg_counter++ % 256 == 0 )
+                    eyemsg_printf((char*)"SAMPLE %ld received %ld",(long double)evt.time ,(long double)inputtime);
 				
                 // now update all the variables
 				e_time -> setValue( (float)evt.time ,inputtime);
