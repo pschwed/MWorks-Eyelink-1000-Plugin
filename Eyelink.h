@@ -45,8 +45,8 @@ protected:
 	boost::shared_ptr <Variable> p_ly;
 	boost::shared_ptr <Variable> p_r;
 	boost::shared_ptr <Variable> p_l;
-	const float e_dist;
-	const float z_dist;
+	const double e_dist;
+	const double z_dist;
 	boost::shared_ptr <Variable> e_time;
 	
 	const MWorksTime update_period;
@@ -61,24 +61,24 @@ protected:
     unsigned int ack_msg_counter;
 	
 	// vars for coordinate transformation
-	float p4321z;
-	float p43x;
-	float p43y;     
-	float p21x;
-	float p21y;
-	float d4321;
-	float d4343;
-	float d2121;
-	float denom;
-	float numer;
-	float mua;
-	float mub;
-	float pax;
-	float pay;
-	float paz;
-	float pbx;
-	float pby;
-	float pbz;
+	double p4321z;
+	double p43x;
+	double p43y;     
+	double p21x;
+	double p21y;
+	double d4321;
+	double d4343;
+	double d2121;
+	double denom;
+	double numer;
+	double mua;
+	double mub;
+	double pax;
+	double pay;
+	double paz;
+	double pbx;
+	double pby;
+	double pbz;
 	
 
 public:

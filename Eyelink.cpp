@@ -244,11 +244,11 @@ bool Eyelink::update() {
                 inputtime = this->clock->getCurrentTimeUS();
                 
                 // occasionally, send the current time together with the sample time back to the tracker (and log it there)
-                if ( ack_msg_counter++ % 256 == 0 )
-                    eyemsg_printf((char*)"SAMPLE %ld received %ld",(long double)evt.time ,(long double)inputtime);
+                if ( ack_msg_counter++ % 512 == 0 )
+                    eyemsg_printf((char*)"SAMPLE %ld received %lld",(long)evt.time,inputtime);
 				
                 // now update all the variables
-				if (e_time != NULL) e_time -> setValue( (float)evt.time ,inputtime);
+				if (e_time != NULL) e_time -> setValue( (long)evt.time ,inputtime);
 				
 				if( evt.gx[RIGHT_EYE] != MISSING_DATA &&
                    evt.gy[RIGHT_EYE] != MISSING_DATA &&
@@ -414,11 +414,10 @@ bool Eyelink::startDeviceIO(){
 		shared_ptr<Scheduler> scheduler = Scheduler::instance();
 		shared_ptr<Eyelink> this_one = component_shared_from_this<Eyelink>();
 		schedule_node = scheduler->scheduleUS(std::string(FILELINE ": ") + getTag(),
-											  (MWorksTime)0, 
-											  update_period, 
+											  update_period, //defer first start one period 
+											  update_period, //repeat interval
 											  M_REPEAT_INDEFINITELY, 
-											  boost::bind(update_, 
-														  this_one),
+											  boost::bind(update_, this_one),
 											  M_DEFAULT_IODEVICE_PRIORITY,
 											  M_DEFAULT_IODEVICE_WARN_SLOP_US,
 											  M_DEFAULT_IODEVICE_FAIL_SLOP_US,
