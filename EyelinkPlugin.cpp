@@ -7,9 +7,6 @@
  *
  */
 
-#include <MWorksCore/Plugin.h>
-#include <MWorksCore/StandardComponentFactory.h>
-
 #include "Eyelink.h"
 
 using namespace mw;

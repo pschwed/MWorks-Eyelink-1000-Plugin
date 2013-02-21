@@ -65,7 +65,7 @@
 		E12A26F71201E2FB00CE8C55 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "$(PLUGINS_DIR)";
+			dstPath = "$(MW_PLUGINS_DIR)";
 			dstSubfolderSpec = 0;
 			files = (
 				E12A26FD1201E31400CE8C55 /* Eyelink.bundle in CopyFiles */,
@@ -265,7 +265,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Edit the plugin binary to link against /Library/Frameworks/eyelink_core.framework instead of a private copy\ninstall_name_tool -change \\\n  \"@executable_path/../Frameworks/eyelink_core.framework/Versions/A/eyelink_core\" \\\n  \"/Library/Frameworks/eyelink_core.framework/Versions/A/eyelink_core\" \\\n  \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/MacOS/${PRODUCT_NAME}\"";
+			shellScript = "# Edit the plugin binary to link against /Library/Frameworks/eyelink_core.framework instead of a private copy\n/usr/bin/xcrun install_name_tool -change \\\n  \"@executable_path/../Frameworks/eyelink_core.framework/Versions/A/eyelink_core\" \\\n  \"/Library/Frameworks/eyelink_core.framework/Versions/A/eyelink_core\" \\\n  \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -301,6 +301,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Eyelink_Prefix.pch;
 				INFOPLIST_FILE = "Eyelink-Info.plist";
+				OTHER_LDFLAGS = "-headerpad_max_install_names";
 				PRODUCT_NAME = Eyelink;
 				WRAPPER_EXTENSION = bundle;
 			};

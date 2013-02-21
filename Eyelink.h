@@ -10,8 +10,6 @@
 #ifndef Eyelink_H_
 #define Eyelink_H_
 
-#include <MWorksCore/IODevice.h>
-
 #include <boost/thread/mutex.hpp>
 
 #include <eyelink_core/eyelink.h>
