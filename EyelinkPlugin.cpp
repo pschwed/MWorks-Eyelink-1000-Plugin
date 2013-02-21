@@ -7,9 +7,6 @@
  *
  */
 
-#include <MWorksCore/Plugin.h>
-#include <MWorksCore/StandardComponentFactory.h>
-
 #include "Eyelink.h"
 
 using namespace mw;
@@ -20,6 +17,7 @@ class EyelinkPlugin : public Plugin {
         registry->registerFactory<StandardComponentFactory, Eyelink>();
     }
 };
+
 
 MW_SYMBOL_PUBLIC
 extern "C" Plugin* getPlugin() {
