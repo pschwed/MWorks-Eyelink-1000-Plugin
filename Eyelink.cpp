@@ -34,8 +34,7 @@ const std::string Eyelink::P_LX("pupil_lx");
 const std::string Eyelink::P_LY("pupil_ly");
 const std::string Eyelink::P_R("pupil_size_r");
 const std::string Eyelink::P_L("pupil_size_l");
-const std::string Eyelink::EYE_DIST("eye_dist");
-const std::string Eyelink::Z_DIST("z_dist");
+const std::string Eyelink::E_DIST("tracking_dist");
 const std::string Eyelink::EYE_TIME("eye_time");
 const std::string Eyelink::UPDATE_PERIOD("data_interval");
 const std::string Eyelink::IP("tracker_ip");
@@ -56,9 +55,7 @@ void Eyelink::describeComponent(ComponentInfo &info) {
     info.setDescription(
                         "Eyelink 1000 Plugin. INSTRUCTIONS BELOW\n"
                         "REQUIRED PARAMETERS:\n"
-                        "eye_dist = Distance between eyes in arbitrary (eyetracker) units (1500 is ok to start with)\n"
-                        "z_dist = Distance from Screen in same arbitrary units (-1000 is ok to start with)\n"
-                        "Adjust these values such as the raw x,y,z coordinates are in the range 0..1\n"
+                        "tracking_dist = The tracking range set in Eyelink configuration (Eyelink default is 1024 (pixels))\n"
                         "data_interval should not be too small (i.e. not shorter than 0.5 ms)\n"
                         "tracker_ip contains the trackers IP, check for working connection using SR-Research's 'simpleexample'\n"
                         "OUTPUT:\n"
@@ -84,8 +81,7 @@ void Eyelink::describeComponent(ComponentInfo &info) {
     info.addParameter(P_LY, false);
     info.addParameter(P_R, false);
     info.addParameter(P_L, false);
-    info.addParameter(EYE_DIST, true, "1500");
-    info.addParameter(Z_DIST, true, "-1000");
+    info.addParameter(E_DIST, true, "1024");
     info.addParameter(EYE_TIME, false);
     info.addParameter(UPDATE_PERIOD, true, "1ms");
     info.addParameter(IP, true, "10.1.1.2");
@@ -94,8 +90,7 @@ void Eyelink::describeComponent(ComponentInfo &info) {
 
 Eyelink::Eyelink(const ParameterValueMap &parameters) :
 IODevice(parameters),
-e_dist(parameters[EYE_DIST]),
-z_dist(parameters[Z_DIST]),
+e_dist(parameters[E_DIST]),
 update_period(parameters[UPDATE_PERIOD]),
 tracker_ip(parameters[IP].str()),
 clock(Clock::instance()),
@@ -256,21 +251,21 @@ bool Eyelink::update() {
                    evt.gy[LEFT_EYE] != MISSING_DATA &&
                    (e_x != NULL || e_y != NULL || e_z != NULL) ) {
 					
-					p4321z = -z_dist / e_dist;
+					//p4321z = 1; 
 					
-					p43x = evt.gx[LEFT_EYE]/e_dist;
-					p43y = evt.gy[LEFT_EYE]/e_dist;     
+					p43x = evt.gx[LEFT_EYE]/e_dist + 1;
+					p43y = evt.gy[LEFT_EYE]/e_dist;
 					
-					p21x = evt.gx[RIGHT_EYE]/e_dist - 1;
+					p21x = evt.gx[RIGHT_EYE]/e_dist - 2;
 					p21y = evt.gy[RIGHT_EYE]/e_dist;
 					
-					d4321 = p43x * p21x + p43y * p21y + p4321z * p4321z;
-					d4343 = p43x * p43x + p43y * p43y + p4321z * p4321z;
-					d2121 = p21x * p21x + p21y * p21y + p4321z * p4321z;
+					d4321 = p43x * p21x + p43y * p21y + 1;
+					d4343 = p43x * p43x + p43y * p43y + 1;
+					d2121 = p21x * p21x + p21y * p21y + 1;
 					
 					denom = d2121 * d4343 - d4321 * d4321;
 					
-					if (abs(denom) > 1e-6) {
+					if (abs(denom) > 1e-6) { // should always be true when e_dist is really tracking range
 						
 						numer = p43x * d4321 - p21x * d4343;
                         
@@ -279,10 +274,10 @@ bool Eyelink::update() {
                         
 						pax = 1 + mua * p21x;
 						pay = mua * p21y;
-						paz = -p4321z + mua * p4321z;
+						paz = -1 + mua; //-p4321z + mua * p4321z;
 						pbx = mub * p43x;
 						pby = mub * p43y;
-						pbz = -p4321z + mub * p4321z;
+						pbz = -1 + mub; //-p4321z + mub * p4321z;
                         
 						if (e_x != NULL) e_x -> setValue(pax + 0.5*(pbx-pax),inputtime);
 						if (e_y != NULL) e_y -> setValue(pay + 0.5*(pby-pay),inputtime);
@@ -390,7 +385,7 @@ bool Eyelink::update() {
 	}
 	else {
 		if(++errors * update_period > (MWorksTime)1000000) { //just a quick hack but impossible to ignore by the user
-			merror(M_IODEVICE_MESSAGE_DOMAIN, "Error! EyeLink Connection Lost!!");
+			merror(M_IODEVICE_MESSAGE_DOMAIN, "Fatal Error! EyeLink Connection Lost!!");
 			errors = 0;
 		}
 	}

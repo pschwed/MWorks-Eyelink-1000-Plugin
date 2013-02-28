@@ -35,7 +35,7 @@
 				pupil_rx="" pupil_ry="" pupil_lx="" pupil_ly=""
 				pupil_size_r="" pupil_size_l=""
 				eye_time=""
-				eye_dist="1500" z_dist="-1000"/>
+				tracking_dist="1024"/>
       <!-- <action type="my_mw_component" tag="My MW Action" />
         ... you get the idea ...
         ...

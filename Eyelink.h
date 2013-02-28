@@ -44,7 +44,6 @@ protected:
 	boost::shared_ptr <Variable> p_r;
 	boost::shared_ptr <Variable> p_l;
 	const double e_dist;
-	const double z_dist;
 	boost::shared_ptr <Variable> e_time;
 	
 	const MWorksTime update_period;
@@ -59,7 +58,7 @@ protected:
     unsigned int ack_msg_counter;
 	
 	// vars for coordinate transformation
-	double p4321z;
+	//double p4321z;
 	double p43x;
 	double p43y;     
 	double p21x;
@@ -98,8 +97,7 @@ public:
     static const std::string P_LY;
     static const std::string P_R;
     static const std::string P_L;
-    static const std::string EYE_DIST;
-    static const std::string Z_DIST;
+    static const std::string E_DIST;
     static const std::string EYE_TIME;
     static const std::string UPDATE_PERIOD;
     static const std::string IP;
