@@ -20,13 +20,13 @@ and download the file "EyeLink_Developers_Kit_for_Mac_OSX_x64.dmg".  Double-clic
 
 
 ** Functionality **
-updated Aug 01 2012:
+updated Feb 28 2013:
 
 Once a connection to the Eyelink is established at plugin load time, the tracker goes into 'Link Open' mode. It is then instructed to create a data file named YYMMMMMM.EDF, where YY is the truncated year and MMMMMM are the minutes since Jan. 1. of this year. This data file will contain the Eyelink events that are enabled in the Eyelinks system settings and also confirmation messages from MWorks. These messages can be used to estimate the sample delay and they are in the format "MSG 'time message received' SAMPLE 'time of sample' received 'MWorks time US'". MWorks sends these confirmation messages on every 512th sample, regardless of the content (i.e. also when no eye position signal is present), but only while the tracker is in recording mode and link data reception is enabled.
 Link data reception will begin upon starting the IO device and this will also set the tracker to recording mode. Packages will be requested from the Eyelink driver in intervals specified by data_interval. The time_us timestamp of a package thus reflects the MWorks time a package was read from the driver. The actual time of the sample is written in tracker time units to "eye_time" (this is the same value that is also sent back to the Eyelink as 'time of sample').
 Link data reception will be terminated when stopping of IO device is requested. All outputs will be set to default (missing data) values and the tracker will switch to offline mode.
 
-This plugin also computes 3D eye position if the tracker runs in binocular mode. Parameters eye_dist and z_dist specify the interocular distance and observer distance in arbitrary (eye tracker) units. You should adjust those values so that the trackable range of your system roughly corresponds to the intervals 0 < x|y|z < 1. Outputs "eye_x/_y/_z" are then the midpoint of the shortest connecting line that is orthogonal to both gaze vectors. Values are also in arbitrary units.
+This plugin also computes 3D eye position if the tracker runs in binocular mode. Parameter 'tracking_dist' specifies the maximum tracking range in arbitrary (eye tracker) units. You should adjust this value so that it is set to the maximum raw data value the tracker sends (default is 1024). Outputs "eye_x/_y/_z" are then the midpoint of the shortest line that is orthogonal to both gaze vectors and intersects both. The computed 3d-position has arbitrary values and needs to be transformed to degrees of visual angle with a 3D eye calibrator.
 
 Known bugs:
 - if the connection is lost before the experiment is unloaded or during recording (e.g. when the Eyelink is switched off), the server might crash.
