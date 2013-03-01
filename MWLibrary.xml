@@ -11,9 +11,7 @@
         Eyelink 1000 Plugin. INSTRUCTIONS BELOW
         
         REQUIRED PARAMETERS:
-        eye_dist = Distance between eyes in arbitrary (eyetracker) units (1500 is ok to start with)
-        z_dist = Distance from Screen in same arbitrary units (-1000 is ok to start with)
-        Adjust these values such as the raw x,y,z coordinates are in the range 0..1
+        tracking_dist = Range of possible (eyetracker) units (1024 should be the default value)
         data_interval should not be too short, but faster than tracker's sampling rate
         tracker_ip contains the trackers IP address, check for working connection using SR-Research's 'simpleexample'
         
