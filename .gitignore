@@ -1,5 +1,2 @@
-*.mode1v3
-*.pbxuser
-*.perspectivev3
-build/
 xcuserdata/
+*.xccheckout
