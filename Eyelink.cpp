@@ -96,24 +96,24 @@ tracker_ip(parameters[IP].str()),
 clock(Clock::instance()),
 errors(0),
 ack_msg_counter(0)  {
-    if (!(parameters[RX].empty())) { e_rx = parameters[RX]; }
-    if (!(parameters[RY].empty())) { e_ry = parameters[RY]; }
-    if (!(parameters[LX].empty())) { e_lx = parameters[LX]; }
-    if (!(parameters[LY].empty())) { e_ly = parameters[LY]; }
-    if (!(parameters[EX].empty())) { e_x = parameters[EX]; }
-    if (!(parameters[EY].empty())) { e_y = parameters[EY]; }
-    if (!(parameters[EZ].empty())) { e_z = parameters[EZ]; }
-    if (!(parameters[H_RX].empty())) { h_rx = parameters[H_RX]; }
-    if (!(parameters[H_RY].empty())) { h_ry = parameters[H_RY]; }
-    if (!(parameters[H_LX].empty())) { h_lx = parameters[H_LX]; }
-    if (!(parameters[H_LY].empty())) { h_ly = parameters[H_LY]; }
-    if (!(parameters[P_RX].empty())) { p_rx = parameters[P_RX]; }
-    if (!(parameters[P_RY].empty())) { p_ry = parameters[P_RY]; }
-    if (!(parameters[P_LX].empty())) { p_lx = parameters[P_LX]; }
-    if (!(parameters[P_LY].empty())) { p_ly = parameters[P_LY]; }
-    if (!(parameters[P_R].empty())) { p_r = parameters[P_R]; }
-    if (!(parameters[P_L].empty())) { p_l = parameters[P_L]; }
-    if (!(parameters[EYE_TIME].empty())) { e_time = parameters[EYE_TIME]; }
+    if (!(parameters[RX].empty())) { e_rx = VariablePtr(parameters[RX]); }
+    if (!(parameters[RY].empty())) { e_ry = VariablePtr(parameters[RY]); }
+    if (!(parameters[LX].empty())) { e_lx = VariablePtr(parameters[LX]); }
+    if (!(parameters[LY].empty())) { e_ly = VariablePtr(parameters[LY]); }
+    if (!(parameters[EX].empty())) { e_x = VariablePtr(parameters[EX]); }
+    if (!(parameters[EY].empty())) { e_y = VariablePtr(parameters[EY]); }
+    if (!(parameters[EZ].empty())) { e_z = VariablePtr(parameters[EZ]); }
+    if (!(parameters[H_RX].empty())) { h_rx = VariablePtr(parameters[H_RX]); }
+    if (!(parameters[H_RY].empty())) { h_ry = VariablePtr(parameters[H_RY]); }
+    if (!(parameters[H_LX].empty())) { h_lx = VariablePtr(parameters[H_LX]); }
+    if (!(parameters[H_LY].empty())) { h_ly = VariablePtr(parameters[H_LY]); }
+    if (!(parameters[P_RX].empty())) { p_rx = VariablePtr(parameters[P_RX]); }
+    if (!(parameters[P_RY].empty())) { p_ry = VariablePtr(parameters[P_RY]); }
+    if (!(parameters[P_LX].empty())) { p_lx = VariablePtr(parameters[P_LX]); }
+    if (!(parameters[P_LY].empty())) { p_ly = VariablePtr(parameters[P_LY]); }
+    if (!(parameters[P_R].empty())) { p_r = VariablePtr(parameters[P_R]); }
+    if (!(parameters[P_L].empty())) { p_l = VariablePtr(parameters[P_L]); }
+    if (!(parameters[EYE_TIME].empty())) { e_time = VariablePtr(parameters[EYE_TIME]); }
 }
 
 
