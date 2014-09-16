@@ -150,6 +150,12 @@ bool Eyelink::initialize(){
         else {
             mprintf(M_IODEVICE_MESSAGE_DOMAIN,"Eyelink logs to local file %s",data_file_name);
         }
+        
+        // Tell the tracker what data to include in samples
+        if (OK_RESULT != eyecmd_printf("link_sample_data = LEFT,RIGHT,GAZE,HREF,PUPIL,AREA")) {
+            mwarning(M_IODEVICE_MESSAGE_DOMAIN,
+                     "Eyelink did not respond to link_sample_data command; sample data may be incomplete");
+        }
 		
 		// tell the tracker who we are
 		eyelink_set_name((char*)("MWorks_over_Socket"));
